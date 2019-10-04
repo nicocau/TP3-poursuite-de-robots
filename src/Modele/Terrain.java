@@ -1,15 +1,76 @@
 package Modele;
 
+import Log.Logger;
+import Log.TypeLog;
+import Main.Main;
+
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Terrain {
     private static final Terrain terrain = new Terrain();
     private ArrayList<Case> cases = new ArrayList<Case>();
+    private ArrayList<Case> casesVide = new ArrayList<Case>();
     private ArrayList<Robot> robots = new ArrayList<Robot>();
     private ArrayList<Case> murs = new ArrayList<Case>();
     private Intrus intrus;
 
     private Terrain() {
+
+        Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Création du Terrain");
+
+        Random random = new Random();
+        for (int i = 0; i < Main.TAILLE_X; i++) {
+            for (int j = 0; j < Main.TAILLE_Y; j++) {
+                Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Création de la casse (" + i + "," + j + ")");
+                Case newCase = new Case(i, j);
+                this.cases.add(newCase);
+                this.casesVide.add(newCase);
+            }
+        }
+
+        Case sortie = null;
+        int motierX = (int) Main.TAILLE_X / 2;
+        int motierY = (int) Main.TAILLE_Y / 2;
+        sortie = this.getCaseViaPosition(motierX, 0);
+        this.casesVide.remove(sortie);
+        sortie.setStatusCase(StatusCase.SORTIE);
+        sortie = this.getCaseViaPosition(motierX, Main.TAILLE_X - 1);
+        this.casesVide.remove(sortie);
+        sortie.setStatusCase(StatusCase.SORTIE);
+        sortie = this.getCaseViaPosition(0, motierY);
+        this.casesVide.remove(sortie);
+        sortie.setStatusCase(StatusCase.SORTIE);
+        sortie = this.getCaseViaPosition(Main.TAILLE_Y - 1, motierY);
+        this.casesVide.remove(sortie);
+        sortie.setStatusCase(StatusCase.SORTIE);
+
+
+        this.casesVide.forEach(c -> {
+            if (random.nextDouble() <= Main.POURCENTAGE_MUR) {
+                Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Création d'un mur en (" + c.getX() + "," + c.getY() + ")");
+                c.setStatusCase(StatusCase.MUR);
+                this.getMurs().add(c);
+                this.casesVide.remove(c);
+            }
+        });
+
+        if (this.casesVide.size() == 0) {
+            try {
+                throw new Exception("Il n'y a pas assez de casse libre pour placer les robots et pour le joueur");
+            } catch (Exception e) {
+                e.printStackTrace();
+                Logger.getInstance().ajouteUneLigne(TypeLog.FATAL, "Impposible poursuivre il n'y a pas assez de casse libre pour placer les robots et pour le joueur");
+                System.exit(0);
+            }
+        }
+
+        for (int i = 0; i < Main.NB_ROBOTS; i++) {
+            Case caseRobot = this.casesVide.get(random.nextInt(this.casesVide.size()));
+            this.getRobots().add(new Robot(caseRobot));
+        }
+
+        Case caseIntru = this.casesVide.get(random.nextInt(this.casesVide.size()));
     }
 
     public static Terrain getInstance(){
@@ -46,5 +107,15 @@ public class Terrain {
 
     public void setIntrus(Intrus intrus) {
         this.intrus = intrus;
+    }
+
+    public Case getCaseViaPosition(int x, int y) {
+        final Case[] res = {null};
+        this.cases.forEach(c -> {
+            if (c.getX() == x && c.getY() == y) {
+                res[0] = c;
+            }
+        });
+        return res[0];
     }
 }
