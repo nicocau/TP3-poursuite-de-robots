@@ -29,7 +29,7 @@ public class Logger {
     /**
      * Le format de la date
      */
-    private final String formatDate = "[dd/MM/yyyy hh:mm:ss]";
+    private final String formatDate = "[yyyy-MM-dd HH:mm:ss,SSS]";
 
     /**
      * Le s types de log authoriser
