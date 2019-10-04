@@ -6,7 +6,7 @@ public class Terrain {
     private static final Terrain terrain = new Terrain();
     private ArrayList<Case> cases = new ArrayList<Case>();
     private ArrayList<Robot> robots = new ArrayList<Robot>();
-    private ArrayList<Case> caisses = new ArrayList<Case>();
+    private ArrayList<Case> murs = new ArrayList<Case>();
     private Intrus intrus;
 
     private Terrain() {
@@ -14,10 +14,6 @@ public class Terrain {
 
     public static Terrain getInstance(){
         return Terrain.terrain;
-    }
-
-    public static Terrain getTerrain() {
-        return terrain;
     }
 
     public ArrayList<Case> getCases() {
@@ -36,12 +32,12 @@ public class Terrain {
         this.robots = robots;
     }
 
-    public ArrayList<Case> getCaisses() {
-        return caisses;
+    public ArrayList<Case> getMurs() {
+        return murs;
     }
 
-    public void setCaisses(ArrayList<Case> caisses) {
-        this.caisses = caisses;
+    public void setMurs(ArrayList<Case> murs) {
+        this.murs = murs;
     }
 
     public Intrus getIntrus() {
