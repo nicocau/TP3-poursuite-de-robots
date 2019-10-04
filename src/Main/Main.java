@@ -1,3 +1,5 @@
+package Main;
+
 public class Main {
     public static final int TAILLE_X = 20;
     public static final int TAILLE_Y = 30;
