@@ -1,4 +1,8 @@
 package Modele;
 
-public class StatusCase {
+public enum StatusCase {
+    VIDE,
+    MUR,
+    MESSAGE,
+    SORTIE;
 }
