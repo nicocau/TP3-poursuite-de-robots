@@ -30,32 +30,33 @@ public class Terrain {
         }
 
         Case sortie = null;
-        int motierX = (int) Main.TAILLE_X / 2;
-        int motierY = (int) Main.TAILLE_Y / 2;
+        int motierX = (int) (Main.TAILLE_X - 1) / 2;
+        int motierY = (int) (Main.TAILLE_Y - 1) / 2;
         sortie = this.getCaseViaPosition(motierX, 0);
         this.casesVide.remove(sortie);
         sortie.setStatusCase(StatusCase.SORTIE);
-        sortie = this.getCaseViaPosition(motierX, Main.TAILLE_X - 1);
+        sortie = this.getCaseViaPosition(motierX, Main.TAILLE_Y - 1);
         this.casesVide.remove(sortie);
         sortie.setStatusCase(StatusCase.SORTIE);
         sortie = this.getCaseViaPosition(0, motierY);
         this.casesVide.remove(sortie);
         sortie.setStatusCase(StatusCase.SORTIE);
-        sortie = this.getCaseViaPosition(Main.TAILLE_Y - 1, motierY);
+        sortie = this.getCaseViaPosition(Main.TAILLE_X - 1, motierY);
         this.casesVide.remove(sortie);
         sortie.setStatusCase(StatusCase.SORTIE);
 
-
+        ArrayList<Case> casesAVirer = new ArrayList<Case>();
         this.casesVide.forEach(c -> {
             if (random.nextDouble() <= Main.POURCENTAGE_MUR) {
                 Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Création d'un mur en (" + c.getX() + "," + c.getY() + ")");
                 c.setStatusCase(StatusCase.MUR);
                 this.getMurs().add(c);
-                this.casesVide.remove(c);
+                casesAVirer.add(c);
             }
         });
+        casesAVirer.forEach(c-> this.casesVide.remove(c));
 
-        if (this.casesVide.size() == 0) {
+        if (this.casesVide.size() < Main.NB_ROBOTS+1+1) {
             try {
                 throw new Exception("Il n'y a pas assez de casse libre pour placer les robots et pour le joueur");
             } catch (Exception e) {
@@ -65,12 +66,17 @@ public class Terrain {
             }
         }
 
+        Case caseMessage = this.casesVide.get(random.nextInt(this.casesVide.size()));
+        caseMessage.setStatusCase(StatusCase.MESSAGE);
+        this.casesVide.remove(caseMessage);
+
         for (int i = 0; i < Main.NB_ROBOTS; i++) {
             Case caseRobot = this.casesVide.get(random.nextInt(this.casesVide.size()));
             this.getRobots().add(new Robot(caseRobot));
         }
 
         Case caseIntru = this.casesVide.get(random.nextInt(this.casesVide.size()));
+        this.intrus = new Intrus(caseIntru);
     }
 
     public static Terrain getInstance(){

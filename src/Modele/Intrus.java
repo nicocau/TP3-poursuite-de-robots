@@ -1,19 +1,10 @@
 package Modele;
 
-public class Intrus {
-    private Case caseActuel;
+public class Intrus extends Perssonage {
     private StatusIntru statusIntru = StatusIntru.RECHERCHE;
 
     public Intrus(Case caseActuel) {
-        this.caseActuel = caseActuel;
-    }
-
-    public Case getCaseActuel() {
-        return caseActuel;
-    }
-
-    public void setCaseActuel(Case caseActuel) {
-        this.caseActuel = caseActuel;
+        super(caseActuel);
     }
 
     public StatusIntru getStatusIntru() {

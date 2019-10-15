@@ -1,19 +1,10 @@
 package Modele;
 
-public class Robot {
-    private Case caseActuel;
+public class Robot extends Perssonage {
     private StatusRobo statusRobo = StatusRobo.CHASSE;
 
     public Robot(Case caseActuel) {
-        this.caseActuel = caseActuel;
-    }
-
-    public Case getCaseActuel() {
-        return caseActuel;
-    }
-
-    public void setCaseActuel(Case caseActuel) {
-        this.caseActuel = caseActuel;
+        super(caseActuel);
     }
 
     public StatusRobo getStatusRobo() {
