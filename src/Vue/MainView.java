@@ -33,6 +33,10 @@ public class MainView extends Application{
         return MainView.mainView;
     }
 
+    public Scene getScene() {
+        return scene;
+    }
+
     public void lancement(String[] args) {
         launch(args);
     }
@@ -45,13 +49,14 @@ public class MainView extends Application{
     }
 
     void construirePlateauJeu(Stage primaryStage) {
-        troupe = new Group();
-        scene = new Scene(troupe, width, height, Color.ANTIQUEWHITE);
+        this.troupe = new Group();
+        this.scene = new Scene(troupe, width, height, Color.ANTIQUEWHITE);
         this.dessinEnvironnement();
-        scene.setFill(Color.DARKGRAY);
+        this.scene.setFill(Color.DARKGRAY);
         this.dessinEnvironnement();
         this.animation();
         DessinIntrus dessinIntrus = this.DessinIntru;
+        MainView mainView = this;
         scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
             public void handle(KeyEvent keyEvent){
                 switch (keyEvent.getCode()){
@@ -70,6 +75,9 @@ public class MainView extends Application{
                     case RIGHT:
                     case D:
                         Controleur.getInstance().Deplacement(TypeDeplacement.DROITE,Terrain.getInstance().getIntrus(), dessinIntrus);
+                        break;
+                    case SPACE:
+                        Controleur.getInstance().PrendMsg(mainView);
                         break;
                 }
             }
