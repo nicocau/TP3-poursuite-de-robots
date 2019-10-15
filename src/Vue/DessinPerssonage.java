@@ -15,7 +15,7 @@ public abstract class DessinPerssonage extends Circle {
     public static Color couleurIntrus = Color.GREEN;
 
     public DessinPerssonage(int posX, int posY, Color color) {
-        super((posX * Main.tailleCase + Main.tailleCase), (posY * Main.tailleCase + Main.tailleCase), Main.tailleCase/1.5);
+        super((posX * Main.tailleCase + Main.tailleCase + Main.tailleCase/2), (posY * Main.tailleCase + Main.tailleCase + Main.tailleCase/2), Main.tailleCase/1.5);
         this.posX = posX;
         this.posY = posY;
         this.setFill(color);
@@ -43,11 +43,9 @@ public abstract class DessinPerssonage extends Circle {
         this.posY += y;
         Timeline timeline = new Timeline();
         KeyFrame bougeVoiture = new KeyFrame(new Duration((float)Main.tempo/5),
-                new KeyValue(this.centerXProperty(), posX * Main.tailleCase + Main.tailleCase),
-                new KeyValue(this.centerYProperty(), posY * Main.tailleCase + Main.tailleCase));
+                new KeyValue(this.centerXProperty(), posX * Main.tailleCase + Main.tailleCase + Main.tailleCase/2),
+                new KeyValue(this.centerYProperty(), posY * Main.tailleCase + Main.tailleCase + Main.tailleCase/2));
         timeline.getKeyFrames().add(bougeVoiture);
         timeline.play();
-        this.setCenterX(posX * Main.tailleCase + Main.tailleCase);
-        this.setCenterY(posY * Main.tailleCase + Main.tailleCase);
     }
 }
