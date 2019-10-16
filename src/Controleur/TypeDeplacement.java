@@ -21,4 +21,8 @@ public enum  TypeDeplacement {
     public int getY() {
         return y;
     }
+
+    public static TypeDeplacement getRandom() {
+        return values()[(int) (Math.random() * values().length)];
+    }
 }

@@ -23,10 +23,8 @@ public class Controleur {
         int caseY = perssonage.getCaseActuel().getY();
         if (
                 caseX + typeDeplacement.getX() >= 0 && caseX + typeDeplacement.getX() < Main.TAILLE_X &&
-                        caseY + typeDeplacement.getY() >= 0 && caseY + typeDeplacement.getY() < Main.TAILLE_Y &&
-                        Terrain.getInstance().getCaseViaPosition(caseX + typeDeplacement.getX(), caseY + typeDeplacement.getY()).getStatusCase() != StatusCase.MUR &&
-                        Terrain.getInstance().getIntrus().getStatusIntru() != StatusIntru.PERDU &&
-                        Terrain.getInstance().getIntrus().getStatusIntru() != StatusIntru.GAGNER
+                caseY + typeDeplacement.getY() >= 0 && caseY + typeDeplacement.getY() < Main.TAILLE_Y &&
+                Terrain.getInstance().getCaseViaPosition(caseX + typeDeplacement.getX(), caseY + typeDeplacement.getY()).getStatusCase() != StatusCase.MUR
         ) {
             dessinPerssonage.calculPosition(typeDeplacement.getX(), typeDeplacement.getY());
             perssonage.setCaseActuel(Terrain.getInstance().getCaseViaPosition(caseX + typeDeplacement.getX(), caseY + typeDeplacement.getY()));
@@ -34,6 +32,7 @@ public class Controleur {
             if (perssonage instanceof Intrus) {
                 if (perssonage.getCaseActuel().getStatusCase() == StatusCase.SORTIE && ((Intrus) perssonage).getStatusIntru() == StatusIntru.FUITE) {
                     ((Intrus) perssonage).setStatusIntru(StatusIntru.GAGNER);
+                    mainView.getScene().setOnKeyPressed(null);
                     System.out.println("Gagner");
                 }
 

@@ -43,10 +43,13 @@ public abstract class DessinPerssonage extends Circle {
         this.posX += x;
         this.posY += y;
         Timeline timeline = new Timeline();
-        KeyFrame bougeVoiture = new KeyFrame(new Duration((float)Main.tempo/5),
+        KeyFrame bougeVoiture = new KeyFrame(new Duration((this instanceof DessinIntrus) ? (float) Main.tempo / 5 : (float) Main.tempo),
                 new KeyValue(this.centerXProperty(), posX * Main.tailleCase + Main.tailleCase + Main.tailleCase/2),
                 new KeyValue(this.centerYProperty(), posY * Main.tailleCase + Main.tailleCase + Main.tailleCase/2));
         timeline.getKeyFrames().add(bougeVoiture);
         timeline.play();
+        this.setCenterX(posX * Main.tailleCase + Main.tailleCase + Main.tailleCase / 2);
+        this.setCenterY(posY * Main.tailleCase + Main.tailleCase + Main.tailleCase / 2);
+        this.toFront();
     }
 }

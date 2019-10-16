@@ -25,7 +25,8 @@ public class MainView extends Application{
     private Scene scene;
     private Group troupe;
     private ArrayList<DessinCase> dessinCases = new ArrayList<DessinCase>();
-    private DessinIntrus DessinIntru;
+    private DessinIntrus dessinIntru;
+    private ArrayList<DessinRobots> dessinRobots = new ArrayList<DessinRobots>();
 
     private final static MainView mainView = new MainView();
 
@@ -35,6 +36,14 @@ public class MainView extends Application{
 
     public Scene getScene() {
         return scene;
+    }
+
+    public DessinIntrus getDessinIntru() {
+        return dessinIntru;
+    }
+
+    public ArrayList<DessinRobots> getDessinRobots() {
+        return dessinRobots;
     }
 
     public void lancement(String[] args) {
@@ -53,9 +62,8 @@ public class MainView extends Application{
         this.scene = new Scene(troupe, width, height, Color.ANTIQUEWHITE);
         this.dessinEnvironnement();
         this.scene.setFill(Color.DARKGRAY);
-        this.dessinEnvironnement();
-        this.animation();
-        DessinIntrus dessinIntrus = this.DessinIntru;
+
+        DessinIntrus dessinIntrus = this.dessinIntru;
         MainView mainView = this;
         scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
             public void handle(KeyEvent keyEvent){
@@ -77,7 +85,7 @@ public class MainView extends Application{
                         Controleur.getInstance().Deplacement(TypeDeplacement.DROITE,Terrain.getInstance().getIntrus(), dessinIntrus, mainView);
                         break;
                     case SPACE:
-                        Controleur.getInstance().PrendMsg(mainView, mainView.DessinIntru);
+                        Controleur.getInstance().PrendMsg(mainView, mainView.dessinIntru);
                         break;
                 }
             }
@@ -95,7 +103,12 @@ public class MainView extends Application{
     }
 
     private void animation() {
-
+        Integer[] i = {0};
+        MainView mainView = this;
+        Terrain.getInstance().getRobots().forEach(robot -> {
+            Controleur.getInstance().Deplacement(TypeDeplacement.getRandom(), robot, mainView.getDessinRobots().get(i[0]), mainView);
+            i[0] += 1;
+        });
     }
 
     private void dessinEnvironnement() {
@@ -104,8 +117,13 @@ public class MainView extends Application{
             this.dessinCases.add(dessinCase);
             this.troupe.getChildren().add(dessinCase);
         }
-        this.DessinIntru = new DessinIntrus(Terrain.getInstance().getIntrus().getCaseActuel().getX(), Terrain.getInstance().getIntrus().getCaseActuel().getY());
-        this.troupe.getChildren().add(DessinIntru);
+        this.dessinIntru = new DessinIntrus(Terrain.getInstance().getIntrus().getCaseActuel().getX(), Terrain.getInstance().getIntrus().getCaseActuel().getY());
+        this.troupe.getChildren().add(dessinIntru);
+        Terrain.getInstance().getRobots().forEach(robot -> {
+            DessinRobots dessinRobots = new DessinRobots(robot.getCaseActuel().getX(), robot.getCaseActuel().getX());
+            this.troupe.getChildren().add(dessinRobots);
+            this.dessinRobots.add(dessinRobots);
+        });
     }
 
     public DessinCase getCaseViaPosition(int x, int y) {
