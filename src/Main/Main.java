@@ -3,8 +3,8 @@ package Main;
 import Vue.MainView;
 
 public class Main {
-    public static final int TAILLE_X = 100;
-    public static final int TAILLE_Y = 90;
+    public static final int TAILLE_X = 20;
+    public static final int TAILLE_Y = 30;
     public static final int NB_ROBOTS = 3;
     public static final int DISTANCE_VUE = 4;
     public static final int DISTANCE_VUE_MESSAGE = 2;
