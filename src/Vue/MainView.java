@@ -62,22 +62,22 @@ public class MainView extends Application{
                 switch (keyEvent.getCode()){
                     case UP:
                     case Z:
-                        Controleur.getInstance().Deplacement(TypeDeplacement.HAUT,Terrain.getInstance().getIntrus(), dessinIntrus);
+                        Controleur.getInstance().Deplacement(TypeDeplacement.HAUT,Terrain.getInstance().getIntrus(), dessinIntrus, mainView);
                         break;
                     case DOWN:
                     case S:
-                        Controleur.getInstance().Deplacement(TypeDeplacement.BAS,Terrain.getInstance().getIntrus(), dessinIntrus);
+                        Controleur.getInstance().Deplacement(TypeDeplacement.BAS,Terrain.getInstance().getIntrus(), dessinIntrus, mainView);
                         break;
                     case LEFT:
                     case Q:
-                        Controleur.getInstance().Deplacement(TypeDeplacement.GAUCHE,Terrain.getInstance().getIntrus(), dessinIntrus);
+                        Controleur.getInstance().Deplacement(TypeDeplacement.GAUCHE,Terrain.getInstance().getIntrus(), dessinIntrus, mainView);
                         break;
                     case RIGHT:
                     case D:
-                        Controleur.getInstance().Deplacement(TypeDeplacement.DROITE,Terrain.getInstance().getIntrus(), dessinIntrus);
+                        Controleur.getInstance().Deplacement(TypeDeplacement.DROITE,Terrain.getInstance().getIntrus(), dessinIntrus, mainView);
                         break;
                     case SPACE:
-                        Controleur.getInstance().PrendMsg(mainView);
+                        Controleur.getInstance().PrendMsg(mainView, mainView.DessinIntru);
                         break;
                 }
             }
@@ -106,5 +106,15 @@ public class MainView extends Application{
         }
         this.DessinIntru = new DessinIntrus(Terrain.getInstance().getIntrus().getCaseActuel().getX(), Terrain.getInstance().getIntrus().getCaseActuel().getY());
         this.troupe.getChildren().add(DessinIntru);
+    }
+
+    public DessinCase getCaseViaPosition(int x, int y) {
+        final DessinCase[] res = {null};
+        this.dessinCases.forEach(c -> {
+            if (c.getPosX() == x && c.getPosY() == y) {
+                res[0] = c;
+            }
+        });
+        return res[0];
     }
 }

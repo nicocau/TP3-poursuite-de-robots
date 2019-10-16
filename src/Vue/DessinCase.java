@@ -10,7 +10,9 @@ public class DessinCase extends Rectangle {
     private int posX;
     private int posY;
     private StatusCase statusCase;
-    public static Color couleurVide = Color.BLACK;
+    private boolean decouvert = false;
+    public static Color couleurCacher = Color.BLACK;
+    public static Color couleurVide = Color.LIGHTGRAY;
     public static Color couleurMur = Color.WHITE;
     public static Color couleurMessage = Color.YELLOW;
     public static Color couleurSortie = Color.BLUE;
@@ -24,20 +26,24 @@ public class DessinCase extends Rectangle {
         this.appliqueCouleur();
     }
 
-    private void appliqueCouleur() {
-        switch (this.statusCase) {
-            case SORTIE:
-                this.setFill(DessinCase.couleurSortie);
-                break;
-            case MUR:
-                this.setFill(DessinCase.couleurMur);
-                break;
-            case VIDE:
-                this.setFill(DessinCase.couleurVide);
-                break;
-            case MESSAGE:
-                this.setFill(DessinCase.couleurMessage);
-                break;
+    public void appliqueCouleur() {
+        if (this.decouvert) {
+            switch (this.statusCase) {
+                case SORTIE:
+                    this.setFill(DessinCase.couleurSortie);
+                    break;
+                case MUR:
+                    this.setFill(DessinCase.couleurMur);
+                    break;
+                case VIDE:
+                    this.setFill(DessinCase.couleurVide);
+                    break;
+                case MESSAGE:
+                    this.setFill(DessinCase.couleurMessage);
+                    break;
+            }
+        } else {
+            this.setFill(DessinCase.couleurCacher);
         }
     }
 
@@ -63,5 +69,13 @@ public class DessinCase extends Rectangle {
 
     public void setStatusCase(StatusCase statusCase) {
         this.statusCase = statusCase;
+    }
+
+    public boolean isDecouvert() {
+        return decouvert;
+    }
+
+    public void setDecouvert(boolean decouvert) {
+        this.decouvert = decouvert;
     }
 }
