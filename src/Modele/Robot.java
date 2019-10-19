@@ -10,7 +10,7 @@ public class Robot extends Perssonage {
 
     public Robot(Case caseActuel) {
         super(caseActuel);
-        Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Crée un robot => robot: "+this.toString());
+        Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Crée un robot => robot: "+ this.toString());
     }
 
     public StatusRobo getStatusRobo() {
