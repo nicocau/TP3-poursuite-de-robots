@@ -12,6 +12,7 @@ public abstract class DessinPerssonage extends Circle {
     private int posX;
     private int posY;
     public static Color couleurRobot = Color.RED;
+    public static Color couleurRobotChase = Color.PURPLE;
     public static Color couleurIntrus = Color.GREEN;
     public static Color couleurIntrusMessage = Color.PINK;
 

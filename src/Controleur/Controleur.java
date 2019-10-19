@@ -148,6 +148,7 @@ public class Controleur {
             }
         } else if (Robot.getCaseIntru() != null) {
             Robot.setCaseIntru(null);
+            Terrain.getInstance().getRobots().forEach(robot1 -> robot1.setStatusRobo(StatusRobo.PATROUILLE));
         }
         return res;
     }
