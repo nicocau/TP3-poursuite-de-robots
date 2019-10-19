@@ -11,6 +11,7 @@ public class DessinCase extends Rectangle {
     private int posY;
     private StatusCase statusCase;
     private boolean decouvert = false;
+    private boolean lue = false;
     public static Color couleurCacher = Color.BLACK;
     public static Color couleurVide = Color.LIGHTGRAY;
     public static Color couleurMur = Color.WHITE;
@@ -39,7 +40,7 @@ public class DessinCase extends Rectangle {
                     this.setFill(DessinCase.couleurVide);
                     break;
                 case MESSAGE:
-                    this.setFill(DessinCase.couleurMessage);
+                    this.setFill((this.lue)?DessinCase.couleurMessage:DessinCase.couleurMur);
                     break;
             }
         } else {
@@ -77,5 +78,13 @@ public class DessinCase extends Rectangle {
 
     public void setDecouvert(boolean decouvert) {
         this.decouvert = decouvert;
+    }
+
+    public boolean isLue() {
+        return lue;
+    }
+
+    public void setLue(boolean lue) {
+        this.lue = lue;
     }
 }

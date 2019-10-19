@@ -5,6 +5,7 @@ public class Case {
     private int y = -1;
     private StatusCase statusCase = StatusCase.VIDE;
     private boolean decouvert = false;
+    private boolean lue = false;
 
     public Case(int x, int y) {
         this.x = x;
@@ -41,5 +42,13 @@ public class Case {
 
     public void setDecouvert(boolean decouvert) {
         this.decouvert = decouvert;
+    }
+
+    public boolean isLue() {
+        return lue;
+    }
+
+    public void setLue(boolean lue) {
+        this.lue = lue;
     }
 }

@@ -75,6 +75,19 @@ public class Controleur {
                 }
             }
         }
+        for (int i = x - Main.DISTANCE_VUE_MESSAGE; i < x + Main.DISTANCE_VUE_MESSAGE; i++) {
+            for (int j = y - Main.DISTANCE_VUE_MESSAGE; j < y + Main.DISTANCE_VUE_MESSAGE; j++) {
+                if (Math.pow((i - x), 2) + Math.pow((j - y), 2) <= Math.pow(Main.DISTANCE_VUE_MESSAGE, 2)) {
+                    Case caseTerain = Terrain.getInstance().getCaseViaPosition(i, j);
+                    if (caseTerain != null) {
+                        caseTerain.setLue(true);
+                        DessinCase dessinCase = mainView.getCaseViaPosition(i, j);
+                        dessinCase.setLue(true);
+                        dessinCase.appliqueCouleur();
+                    }
+                }
+            }
+        }
     }
 
     public void PrendMsg(MainView mainView, DessinIntrus dessinIntrus) {
