@@ -24,21 +24,39 @@ public class Controleur {
         if (
                 caseX + typeDeplacement.getX() >= 0 && caseX + typeDeplacement.getX() < Main.TAILLE_X &&
                 caseY + typeDeplacement.getY() >= 0 && caseY + typeDeplacement.getY() < Main.TAILLE_Y &&
+                Terrain.getInstance().getCaseViaPosition(caseX + typeDeplacement.getX(), caseY + typeDeplacement.getY()) != null &&
                 Terrain.getInstance().getCaseViaPosition(caseX + typeDeplacement.getX(), caseY + typeDeplacement.getY()).getStatusCase() != StatusCase.MUR
         ) {
             dessinPerssonage.calculPosition(typeDeplacement.getX(), typeDeplacement.getY());
             perssonage.setCaseActuel(Terrain.getInstance().getCaseViaPosition(caseX + typeDeplacement.getX(), caseY + typeDeplacement.getY()));
 
-            if (perssonage instanceof Intrus) {
+            if (this.checkPerdue()) {
+                Terrain.getInstance().getIntrus().setStatusIntru(StatusIntru.PERDU);
+                mainView.getScene().setOnKeyPressed(null);
+                System.out.println("Perdu");
+                mainView.getLittleCycle().stop();
+            } else if (perssonage instanceof Intrus) {
                 if (perssonage.getCaseActuel().getStatusCase() == StatusCase.SORTIE && ((Intrus) perssonage).getStatusIntru() == StatusIntru.FUITE) {
                     ((Intrus) perssonage).setStatusIntru(StatusIntru.GAGNER);
                     mainView.getScene().setOnKeyPressed(null);
+                    mainView.getLittleCycle().stop();
                     System.out.println("Gagner");
                 }
 
                 this.updateCelluleVisible((Intrus) perssonage, mainView);
             }
         }
+    }
+
+    private boolean checkPerdue() {
+        Case caseIntrus = Terrain.getInstance().getIntrus().getCaseActuel();
+        final boolean[] res = {false};
+        Terrain.getInstance().getRobots().forEach(robot -> {
+            if (robot.getCaseActuel() == caseIntrus) {
+                res[0] = true;
+            }
+        });
+        return res[0];
     }
 
     private void updateCelluleVisible(Intrus perssonage, MainView mainView) {

@@ -29,6 +29,7 @@ public class MainView extends Application{
     private ArrayList<DessinRobots> dessinRobots = new ArrayList<DessinRobots>();
 
     private final static MainView mainView = new MainView();
+    private Timeline littleCycle;
 
     public static MainView getInstance() {
         return MainView.mainView;
@@ -44,6 +45,10 @@ public class MainView extends Application{
 
     public ArrayList<DessinRobots> getDessinRobots() {
         return dessinRobots;
+    }
+
+    public Timeline getLittleCycle() {
+        return littleCycle;
     }
 
     public void lancement(String[] args) {
@@ -94,7 +99,7 @@ public class MainView extends Application{
         primaryStage.setTitle("Poursuite de robots");
         primaryStage.setScene(scene);
         primaryStage.show();
-        Timeline littleCycle = new Timeline(new KeyFrame(Duration.millis(Main.tempo),
+        this.littleCycle = new Timeline(new KeyFrame(Duration.millis(Main.tempo),
                 event -> {
                     this.animation();
                 }));
@@ -120,7 +125,7 @@ public class MainView extends Application{
         this.dessinIntru = new DessinIntrus(Terrain.getInstance().getIntrus().getCaseActuel().getX(), Terrain.getInstance().getIntrus().getCaseActuel().getY());
         this.troupe.getChildren().add(dessinIntru);
         Terrain.getInstance().getRobots().forEach(robot -> {
-            DessinRobots dessinRobots = new DessinRobots(robot.getCaseActuel().getX(), robot.getCaseActuel().getX());
+            DessinRobots dessinRobots = new DessinRobots(robot.getCaseActuel().getX(), robot.getCaseActuel().getY());
             this.troupe.getChildren().add(dessinRobots);
             this.dessinRobots.add(dessinRobots);
         });
