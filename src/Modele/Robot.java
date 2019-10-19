@@ -1,7 +1,9 @@
 package Modele;
 
 public class Robot extends Perssonage {
-    private StatusRobo statusRobo = StatusRobo.CHASSE;
+    private StatusRobo statusRobo = StatusRobo.PATROUILLE;
+    private static volatile Case caseIntru;
+    private static volatile int nbTickDeRecherche = 0;
 
     public Robot(Case caseActuel) {
         super(caseActuel);
@@ -13,5 +15,21 @@ public class Robot extends Perssonage {
 
     public void setStatusRobo(StatusRobo statusRobo) {
         this.statusRobo = statusRobo;
+    }
+
+    public static Case getCaseIntru() {
+        return caseIntru;
+    }
+
+    public static void setCaseIntru(Case caseIntru) {
+        Robot.caseIntru = caseIntru;
+    }
+
+    public static int getNbTickDeRecherche() {
+        return nbTickDeRecherche;
+    }
+
+    public static void setNbTickDeRecherche(int nbTickDeRecherche) {
+        Robot.nbTickDeRecherche = nbTickDeRecherche;
     }
 }

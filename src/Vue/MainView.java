@@ -4,6 +4,7 @@ import Controleur.Controleur;
 import Controleur.TypeDeplacement;
 import Main.Main;
 import Modele.Case;
+import Modele.Robot;
 import Modele.Terrain;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -111,9 +112,11 @@ public class MainView extends Application{
         Integer[] i = {0};
         MainView mainView = this;
         Terrain.getInstance().getRobots().forEach(robot -> {
-            Controleur.getInstance().Deplacement(TypeDeplacement.getRandom(), robot, mainView.getDessinRobots().get(i[0]), mainView);
+            TypeDeplacement typeDeplacement = Controleur.getInstance().choseRobotMove(robot);
+            Controleur.getInstance().Deplacement(typeDeplacement, robot, mainView.getDessinRobots().get(i[0]), mainView);
             i[0] += 1;
         });
+        Robot.setNbTickDeRecherche(Robot.getNbTickDeRecherche()-1);
     }
 
     private void dessinEnvironnement() {
