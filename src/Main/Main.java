@@ -1,5 +1,7 @@
 package Main;
 
+import Log.Logger;
+import Log.TypeLog;
 import Vue.MainView;
 
 public class Main {
@@ -15,6 +17,7 @@ public class Main {
     public static final int NB_TICKE_RECHECHERCHE = 5;
 
     public static void main(String[] args) {
+        Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Lance le jeux");
         MainView.getInstance().lancement(args);
     }
 }
