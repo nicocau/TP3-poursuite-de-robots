@@ -1,5 +1,8 @@
 package Modele;
 
+import Log.Logger;
+import Log.TypeLog;
+
 public class Case {
     private int x = -1;
     private int y = -1;
@@ -10,6 +13,7 @@ public class Case {
     public Case(int x, int y) {
         this.x = x;
         this.y = y;
+        Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Crée une case => case:"+this.toString());
     }
 
     public int getX() {
