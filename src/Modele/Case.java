@@ -51,4 +51,9 @@ public class Case {
     public void setLue(boolean lue) {
         this.lue = lue;
     }
+
+    @Override
+    public String toString() {
+        return "Case{x:" + this.x + "; y:" + this.y + "; statut:" + this.statusCase + "; decouvert:" + this.decouvert + "; lue" + this.lue + "}";
+    }
 }

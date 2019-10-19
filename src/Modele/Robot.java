@@ -32,4 +32,9 @@ public class Robot extends Perssonage {
     public static void setNbTickDeRecherche(int nbTickDeRecherche) {
         Robot.nbTickDeRecherche = nbTickDeRecherche;
     }
+
+    @Override
+    public String toString() {
+        return "Robot {case:" + this.caseActuel.toString() + "; status:" + this.statusRobo + "; caseIntru" + Robot.caseIntru + " nbTockDeRecherche" + Robot.nbTickDeRecherche+"}";
+    }
 }

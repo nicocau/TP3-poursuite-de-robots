@@ -1,7 +1,7 @@
 package Modele;
 
 public abstract class Perssonage {
-    private Case caseActuel;
+    protected Case caseActuel;
 
     public Perssonage(Case caseActuel) {
         this.caseActuel = caseActuel;
@@ -14,4 +14,7 @@ public abstract class Perssonage {
     public void setCaseActuel(Case caseActuel) {
         this.caseActuel = caseActuel;
     }
+
+    @Override
+    public abstract String toString();
 }

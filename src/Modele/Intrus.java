@@ -14,4 +14,9 @@ public class Intrus extends Perssonage {
     public void setStatusIntru(StatusIntru statusIntru) {
         this.statusIntru = statusIntru;
     }
+
+    @Override
+    public String toString() {
+        return "Intrus {case:"+this.caseActuel.toString()+"; status:"+this.statusIntru+"}";
+    }
 }
