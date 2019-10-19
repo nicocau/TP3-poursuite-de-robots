@@ -1,10 +1,14 @@
 package Modele;
 
+import Log.Logger;
+import Log.TypeLog;
+
 public class Intrus extends Perssonage {
     private StatusIntru statusIntru = StatusIntru.RECHERCHE;
 
     public Intrus(Case caseActuel) {
         super(caseActuel);
+        Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Crée un intrus => intrus: " + this.toString());
     }
 
     public StatusIntru getStatusIntru() {

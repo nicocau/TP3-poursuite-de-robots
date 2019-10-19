@@ -1,5 +1,8 @@
 package Modele;
 
+import Log.Logger;
+import Log.TypeLog;
+
 public class Robot extends Perssonage {
     private StatusRobo statusRobo = StatusRobo.PATROUILLE;
     private static volatile Case caseIntru;
@@ -7,6 +10,7 @@ public class Robot extends Perssonage {
 
     public Robot(Case caseActuel) {
         super(caseActuel);
+        Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Crée un robot => robot: "+this.toString());
     }
 
     public StatusRobo getStatusRobo() {
