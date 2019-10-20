@@ -60,6 +60,7 @@ public class DessinCase extends Rectangle {
 
     /**
      * retourne la postion en x de la case
+     *
      * @return x
      */
     public int getPosX() {
@@ -68,6 +69,7 @@ public class DessinCase extends Rectangle {
 
     /**
      * retourne la postion en y de la case
+     *
      * @return y
      */
     public int getPosY() {
@@ -76,6 +78,7 @@ public class DessinCase extends Rectangle {
 
     /**
      * modifie le fait de la découvert
+     *
      * @param decouvert
      */
     public void setDecouvert(boolean decouvert) {
@@ -84,6 +87,7 @@ public class DessinCase extends Rectangle {
 
     /**
      * modifie le fait que la case soit lue
+     *
      * @param lue
      */
     public void setLue(boolean lue) {

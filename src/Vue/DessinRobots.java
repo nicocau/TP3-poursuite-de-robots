@@ -2,7 +2,6 @@ package Vue;
 
 public class DessinRobots extends DessinPerssonage {
     /**
-     *
      * @param posX
      * @param posY
      */

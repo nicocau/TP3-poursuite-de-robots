@@ -18,6 +18,7 @@ public abstract class DessinPerssonage extends Circle {
 
     /**
      * constructeur par defaut
+     *
      * @param posX
      * @param posY
      * @param color
@@ -32,6 +33,7 @@ public abstract class DessinPerssonage extends Circle {
 
     /**
      * calcul et déplace le perssonage
+     *
      * @param x
      * @param y
      */

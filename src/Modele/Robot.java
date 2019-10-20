@@ -74,6 +74,7 @@ public class Robot extends Perssonage {
 
     /**
      * retourne un descriptif de l'objet
+     *
      * @return descriptif du robot
      */
     @Override

@@ -45,6 +45,7 @@ public class MainView extends Application {
 
     /**
      * permet de récuperer la scene
+     *
      * @return screne
      */
     public Scene getScene() {
@@ -53,6 +54,7 @@ public class MainView extends Application {
 
     /**
      * retourne les dessin des robots
+     *
      * @return dessin robots
      */
     public ArrayList<DessinRobots> getDessinRobots() {
@@ -61,6 +63,7 @@ public class MainView extends Application {
 
     /**
      * retoure la timeline
+     *
      * @return timeline
      */
     public Timeline getLittleCycle() {
@@ -69,6 +72,7 @@ public class MainView extends Application {
 
     /**
      * permet de lancer la vue
+     *
      * @param args
      */
     public void lancement(String[] args) {
@@ -77,6 +81,7 @@ public class MainView extends Application {
 
     /**
      * methode initialisant la vue
+     *
      * @param primaryStage
      * @throws Exception
      */
@@ -89,6 +94,7 @@ public class MainView extends Application {
 
     /**
      * methode permetant de crée la vue
+     *
      * @param primaryStage
      */
     void construirePlateauJeu(Stage primaryStage) {
@@ -162,7 +168,7 @@ public class MainView extends Application {
     }
 
     /**
-     *  methode permetant de crée les élément comme les caise et le robots
+     * methode permetant de crée les élément comme les caise et le robots
      */
     private void dessinEnvironnement() {
         Logger.getInstance().ajouteUneLigne(TypeLog.DEBUG, "Dessine les case");
@@ -184,6 +190,7 @@ public class MainView extends Application {
 
     /**
      * permet de retouner un dessin de case a partire de sa position
+     *
      * @param x
      * @param y
      * @return case

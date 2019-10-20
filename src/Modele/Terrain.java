@@ -92,6 +92,7 @@ public class Terrain {
 
     /**
      * retourne le singleton du terrain
+     *
      * @return le singleton du terain
      */
     public static Terrain getInstance() {
@@ -109,6 +110,7 @@ public class Terrain {
 
     /**
      * retourne la liste des robots
+     *
      * @return liste de robots
      */
     public ArrayList<Robot> getRobots() {
@@ -117,6 +119,7 @@ public class Terrain {
 
     /**
      * retourne la liste des murs
+     *
      * @return liste de murs
      */
     public ArrayList<Case> getMurs() {
@@ -125,6 +128,7 @@ public class Terrain {
 
     /**
      * retourn l'intu
+     *
      * @return intru
      */
     public Intrus getIntrus() {
@@ -133,6 +137,7 @@ public class Terrain {
 
     /**
      * retourne une case a partire de la possition donnée
+     *
      * @param x
      * @param y
      * @return
