@@ -15,6 +15,9 @@ public class Terrain {
     private ArrayList<Case> murs = new ArrayList<Case>();
     private Intrus intrus;
 
+    /**
+     * construceur par défaut du terrain, il génére également les élément dépendent du terain
+     */
     private Terrain() {
 
         Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Création du Terrain");
@@ -87,42 +90,53 @@ public class Terrain {
         this.intrus = new Intrus(caseIntru);
     }
 
+    /**
+     * retourne le singleton du terrain
+     * @return le singleton du terain
+     */
     public static Terrain getInstance() {
         return Terrain.terrain;
     }
 
+    /**
+     * retoure la liste des case
+     *
+     * @return la liste des case
+     */
     public ArrayList<Case> getCases() {
         return cases;
     }
 
-    public void setCases(ArrayList<Case> cases) {
-        this.cases = cases;
-    }
-
+    /**
+     * retourne la liste des robots
+     * @return liste de robots
+     */
     public ArrayList<Robot> getRobots() {
         return robots;
     }
 
-    public void setRobots(ArrayList<Robot> robots) {
-        this.robots = robots;
-    }
-
+    /**
+     * retourne la liste des murs
+     * @return liste de murs
+     */
     public ArrayList<Case> getMurs() {
         return murs;
     }
 
-    public void setMurs(ArrayList<Case> murs) {
-        this.murs = murs;
-    }
-
+    /**
+     * retourn l'intu
+     * @return intru
+     */
     public Intrus getIntrus() {
         return intrus;
     }
 
-    public void setIntrus(Intrus intrus) {
-        this.intrus = intrus;
-    }
-
+    /**
+     * retourne une case a partire de la possition donnée
+     * @param x
+     * @param y
+     * @return
+     */
     public Case getCaseViaPosition(int x, int y) {
         final Case[] res = {null};
         this.cases.forEach(c -> {

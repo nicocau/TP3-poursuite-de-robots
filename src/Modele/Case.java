@@ -3,9 +3,12 @@ package Modele;
 import Log.Logger;
 import Log.TypeLog;
 
+/**
+ *
+ */
 public class Case {
-    private int x = -1;
-    private int y = -1;
+    private int x;
+    private int y;
     private StatusCase statusCase = StatusCase.VIDE;
     private boolean decouvert = false;
     private boolean lue = false;
@@ -32,30 +35,12 @@ public class Case {
     }
 
     /**
-     * modifie le x
-     *
-     * @param x
-     */
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    /**
      * retourne le y
      *
      * @return y
      */
     public int getY() {
         return y;
-    }
-
-    /**
-     * modifie le y
-     *
-     * @param y
-     */
-    public void setY(int y) {
-        this.y = y;
     }
 
     /**
@@ -77,16 +62,7 @@ public class Case {
     }
 
     /**
-     * retourne si la case est decouvert
-     *
-     * @return decouvert
-     */
-    public boolean isDecouvert() {
-        return decouvert;
-    }
-
-    /**
-     * modifie le fait que la
+     * modifie le fait que la case est vue
      *
      * @param decouvert
      */
@@ -94,14 +70,20 @@ public class Case {
         this.decouvert = decouvert;
     }
 
-    public boolean isLue() {
-        return lue;
-    }
-
+    /**
+     * modifie le fait que la case est lue
+     *
+     * @param lue
+     */
     public void setLue(boolean lue) {
         this.lue = lue;
     }
 
+    /**
+     * retourne la description de l'objet
+     *
+     * @return la description de l'objet
+     */
     @Override
     public String toString() {
         return "Case{x:" + this.x + "; y:" + this.y + "; statut:" + this.statusCase + "; decouvert:" + this.decouvert + "; lue" + this.lue + "}";
