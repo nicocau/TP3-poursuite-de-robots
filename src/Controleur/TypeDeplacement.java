@@ -13,19 +13,36 @@ public enum  TypeDeplacement {
     private int x = 0;
     private int y = 0;
 
+    /**
+     * Constructeur des type de déplacment
+     * @param x
+     * @param y
+     */
     TypeDeplacement(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
+    /**
+     * retourne le x
+     * @return x
+     */
     public int getX() {
         return x;
     }
 
+    /**
+     * retour le y
+     * @return y
+     */
     public int getY() {
         return y;
     }
 
+    /**
+     * retourne une valeur aléatoir
+     * @return typeDeDeplacement
+     */
     public static TypeDeplacement getRandom() {
         return values()[(int) (Math.random() * values().length)];
     }

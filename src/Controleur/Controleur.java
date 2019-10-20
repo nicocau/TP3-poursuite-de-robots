@@ -10,16 +10,35 @@ import Vue.DessinPerssonage;
 import Vue.MainView;
 import javafx.scene.paint.Color;
 
+
 public class Controleur {
+    /**
+     * Le singleton
+     */
     private static final Controleur controleur = new Controleur();
 
+    /**
+     * Le contructeur par défaut
+     */
     private Controleur() {
     }
 
+
+    /**
+     * Permet de récupérer le singleton
+     * @return Controleur
+     */
     public static Controleur getInstance() {
         return Controleur.controleur;
     }
 
+    /**
+     * Gere le déplacement des perssonage
+     * @param typeDeplacement
+     * @param perssonage
+     * @param dessinPerssonage
+     * @param mainView
+     */
     public void Deplacement(TypeDeplacement typeDeplacement, Perssonage perssonage, DessinPerssonage dessinPerssonage, MainView mainView) {
         int caseX = perssonage.getCaseActuel().getX();
         int caseY = perssonage.getCaseActuel().getY();
@@ -61,6 +80,10 @@ public class Controleur {
         }
     }
 
+    /**
+     * Recher le joueur par le robot
+     * @param perssonage
+     */
     private void recherJoueur(Robot perssonage) {
         Logger.getInstance().ajouteUneLigne(TypeLog.DEBUG, "Recherche Joueur => Robot" + perssonage);
         int x = perssonage.getCaseActuel().getX();
@@ -82,6 +105,10 @@ public class Controleur {
         }
     }
 
+    /**
+     * Vérifie si le joueur c'est fait attraper
+     * @return perdu
+     */
     private boolean checkPerdue() {
         Logger.getInstance().ajouteUneLigne(TypeLog.DEBUG, "Vérifier que le joueur ne c'est pas fait attraper");
         Case caseIntrus = Terrain.getInstance().getIntrus().getCaseActuel();
@@ -95,6 +122,11 @@ public class Controleur {
         return res[0];
     }
 
+    /**
+     * Met a jour la vue des cellues
+     * @param perssonage
+     * @param mainView
+     */
     private void updateCelluleVisible(Intrus perssonage, MainView mainView) {
         Logger.getInstance().ajouteUneLigne(TypeLog.DEBUG, "Met a jour les case visible");
         Logger.getInstance().ajouteUneLigne(TypeLog.DEBUG, "Met a jour les case visible => perssonage:" + perssonage);
@@ -131,6 +163,11 @@ public class Controleur {
         }
     }
 
+    /**
+     * Tente de récupérer le message
+     * @param mainView
+     * @param dessinIntrus
+     */
     public void PrendMsg(MainView mainView, DessinIntrus dessinIntrus) {
         Logger.getInstance().ajouteUneLigne(TypeLog.DEBUG, "Tente de récupérer le message");
         if (Terrain.getInstance().getIntrus().getCaseActuel().getStatusCase() == StatusCase.MESSAGE) {
@@ -141,6 +178,11 @@ public class Controleur {
         }
     }
 
+    /**
+     * Permet de choisir les mouvement du robot
+     * @param robot
+     * @return
+     */
     public TypeDeplacement choseRobotMove(Robot robot) {
         Logger.getInstance().ajouteUneLigne(TypeLog.DEBUG, "Choisie le mouvement du robot => " + robot.toString());
         TypeDeplacement res = TypeDeplacement.getRandom();

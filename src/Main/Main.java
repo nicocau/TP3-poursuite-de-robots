@@ -16,6 +16,10 @@ public class Main {
     public static final int tailleCase = 10;
     public static final int NB_TICKE_RECHECHERCHE = 5;
 
+    /**
+     * Main
+     * @param args
+     */
     public static void main(String[] args) {
         Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Lance le jeux");
         MainView.getInstance().lancement(args);
