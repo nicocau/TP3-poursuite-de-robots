@@ -26,6 +26,7 @@ public class Controleur {
 
     /**
      * Permet de récupérer le singleton
+     *
      * @return Controleur
      */
     public static Controleur getInstance() {
@@ -34,6 +35,7 @@ public class Controleur {
 
     /**
      * Gere le déplacement des perssonage
+     *
      * @param typeDeplacement
      * @param perssonage
      * @param dessinPerssonage
@@ -45,9 +47,9 @@ public class Controleur {
         Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Deplacement => perssonage: " + perssonage.toString() + "; typeDeplacement: " + typeDeplacement);
         if (
                 caseX + typeDeplacement.getX() >= 0 && caseX + typeDeplacement.getX() < Main.TAILLE_X &&
-                caseY + typeDeplacement.getY() >= 0 && caseY + typeDeplacement.getY() < Main.TAILLE_Y &&
-                Terrain.getInstance().getCaseViaPosition(caseX + typeDeplacement.getX(), caseY + typeDeplacement.getY()) != null &&
-                Terrain.getInstance().getCaseViaPosition(caseX + typeDeplacement.getX(), caseY + typeDeplacement.getY()).getStatusCase() != StatusCase.MUR
+                        caseY + typeDeplacement.getY() >= 0 && caseY + typeDeplacement.getY() < Main.TAILLE_Y &&
+                        Terrain.getInstance().getCaseViaPosition(caseX + typeDeplacement.getX(), caseY + typeDeplacement.getY()) != null &&
+                        Terrain.getInstance().getCaseViaPosition(caseX + typeDeplacement.getX(), caseY + typeDeplacement.getY()).getStatusCase() != StatusCase.MUR
         ) {
             dessinPerssonage.calculPosition(typeDeplacement.getX(), typeDeplacement.getY());
             perssonage.setCaseActuel(Terrain.getInstance().getCaseViaPosition(caseX + typeDeplacement.getX(), caseY + typeDeplacement.getY()));
@@ -82,6 +84,7 @@ public class Controleur {
 
     /**
      * Recher le joueur par le robot
+     *
      * @param perssonage
      */
     private void recherJoueur(Robot perssonage) {
@@ -107,6 +110,7 @@ public class Controleur {
 
     /**
      * Vérifie si le joueur c'est fait attraper
+     *
      * @return perdu
      */
     private boolean checkPerdue() {
@@ -124,6 +128,7 @@ public class Controleur {
 
     /**
      * Met a jour la vue des cellues
+     *
      * @param perssonage
      * @param mainView
      */
@@ -165,6 +170,7 @@ public class Controleur {
 
     /**
      * Tente de récupérer le message
+     *
      * @param mainView
      * @param dessinIntrus
      */
@@ -180,6 +186,7 @@ public class Controleur {
 
     /**
      * Permet de choisir les mouvement du robot
+     *
      * @param robot
      * @return
      */

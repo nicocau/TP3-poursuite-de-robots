@@ -22,8 +22,9 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 
-public class MainView extends Application{
+public class MainView extends Application {
 
+    private final static MainView mainView = new MainView();
     private double width = 0;
     private double height = 0;
     private Scene scene;
@@ -31,8 +32,6 @@ public class MainView extends Application{
     private ArrayList<DessinCase> dessinCases = new ArrayList<DessinCase>();
     private DessinIntrus dessinIntru;
     private ArrayList<DessinRobots> dessinRobots = new ArrayList<DessinRobots>();
-
-    private final static MainView mainView = new MainView();
     private Timeline littleCycle;
 
     public static MainView getInstance() {
@@ -60,7 +59,7 @@ public class MainView extends Application{
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         width = Main.TAILLE_X * Main.tailleCase + (2 * Main.tailleCase);
         height = Main.TAILLE_Y * Main.tailleCase + (2 * Main.tailleCase);
         construirePlateauJeu(primaryStage);
@@ -76,28 +75,28 @@ public class MainView extends Application{
         DessinIntrus dessinIntrus = this.dessinIntru;
         MainView mainView = this;
         Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Crée les touche");
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>(){
-            public void handle(KeyEvent keyEvent){
-                switch (keyEvent.getCode()){
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            public void handle(KeyEvent keyEvent) {
+                switch (keyEvent.getCode()) {
                     case UP:
                     case Z:
                         Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Déplace le joueur en haut");
-                        Controleur.getInstance().Deplacement(TypeDeplacement.HAUT,Terrain.getInstance().getIntrus(), dessinIntrus, mainView);
+                        Controleur.getInstance().Deplacement(TypeDeplacement.HAUT, Terrain.getInstance().getIntrus(), dessinIntrus, mainView);
                         break;
                     case DOWN:
                     case S:
                         Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Déplace le joueur en bas");
-                        Controleur.getInstance().Deplacement(TypeDeplacement.BAS,Terrain.getInstance().getIntrus(), dessinIntrus, mainView);
+                        Controleur.getInstance().Deplacement(TypeDeplacement.BAS, Terrain.getInstance().getIntrus(), dessinIntrus, mainView);
                         break;
                     case LEFT:
                     case Q:
                         Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Déplace le joueur a gauche");
-                        Controleur.getInstance().Deplacement(TypeDeplacement.GAUCHE,Terrain.getInstance().getIntrus(), dessinIntrus, mainView);
+                        Controleur.getInstance().Deplacement(TypeDeplacement.GAUCHE, Terrain.getInstance().getIntrus(), dessinIntrus, mainView);
                         break;
                     case RIGHT:
                     case D:
                         Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Déplace le joueur a droit");
-                        Controleur.getInstance().Deplacement(TypeDeplacement.DROITE,Terrain.getInstance().getIntrus(), dessinIntrus, mainView);
+                        Controleur.getInstance().Deplacement(TypeDeplacement.DROITE, Terrain.getInstance().getIntrus(), dessinIntrus, mainView);
                         break;
                     case SPACE:
                         Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Clique sur espace");
@@ -125,12 +124,12 @@ public class MainView extends Application{
         MainView mainView = this;
         Terrain.getInstance().getRobots().forEach(robot -> {
             TypeDeplacement typeDeplacement = Controleur.getInstance().choseRobotMove(robot);
-            Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Anime le robot => robot:" + robot+"; deplacement: "+typeDeplacement);
+            Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Anime le robot => robot:" + robot + "; deplacement: " + typeDeplacement);
             Controleur.getInstance().Deplacement(typeDeplacement, robot, mainView.getDessinRobots().get(i[0]), mainView);
             mainView.getDessinRobots().get(i[0]).setFill((robot.getStatusRobo() == StatusRobo.PATROUILLE) ? DessinPerssonage.couleurRobot : DessinPerssonage.couleurRobotChase);
             i[0] += 1;
         });
-        Robot.setNbTickDeRecherche(Robot.getNbTickDeRecherche()-1);
+        Robot.setNbTickDeRecherche(Robot.getNbTickDeRecherche() - 1);
     }
 
     private void dessinEnvironnement() {

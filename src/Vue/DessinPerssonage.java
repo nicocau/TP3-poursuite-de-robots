@@ -9,15 +9,15 @@ import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
 public abstract class DessinPerssonage extends Circle {
-    private int posX;
-    private int posY;
     public static Color couleurRobot = Color.RED;
     public static Color couleurRobotChase = Color.PURPLE;
     public static Color couleurIntrus = Color.GREEN;
     public static Color couleurIntrusMessage = Color.PINK;
+    private int posX;
+    private int posY;
 
     public DessinPerssonage(int posX, int posY, Color color) {
-        super((posX * Main.tailleCase + Main.tailleCase + Main.tailleCase/2), (posY * Main.tailleCase + Main.tailleCase + Main.tailleCase/2), Main.tailleCase/1.5);
+        super((posX * Main.tailleCase + Main.tailleCase + Main.tailleCase / 2), (posY * Main.tailleCase + Main.tailleCase + Main.tailleCase / 2), Main.tailleCase / 1.5);
         this.posX = posX;
         this.posY = posY;
         this.setFill(color);
@@ -44,9 +44,9 @@ public abstract class DessinPerssonage extends Circle {
         this.posX += x;
         this.posY += y;
         Timeline timeline = new Timeline();
-        KeyFrame bouge = new KeyFrame(new Duration((this instanceof DessinIntrus) ? (float) Main.tempo / 5 : (float) Main.tempo/2),
-                new KeyValue(this.centerXProperty(), posX * Main.tailleCase + Main.tailleCase + Main.tailleCase/2),
-                new KeyValue(this.centerYProperty(), posY * Main.tailleCase + Main.tailleCase + Main.tailleCase/2));
+        KeyFrame bouge = new KeyFrame(new Duration((this instanceof DessinIntrus) ? (float) Main.tempo / 5 : (float) Main.tempo / 2),
+                new KeyValue(this.centerXProperty(), posX * Main.tailleCase + Main.tailleCase + Main.tailleCase / 2),
+                new KeyValue(this.centerYProperty(), posY * Main.tailleCase + Main.tailleCase + Main.tailleCase / 2));
         timeline.getKeyFrames().add(bouge);
         timeline.play();
         this.setCenterX(posX * Main.tailleCase + Main.tailleCase + Main.tailleCase / 2);

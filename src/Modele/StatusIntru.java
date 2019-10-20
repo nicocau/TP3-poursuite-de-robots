@@ -4,5 +4,5 @@ public enum StatusIntru {
     RECHERCHE,
     FUITE,
     GAGNER,
-    PERDU;
+    PERDU
 }

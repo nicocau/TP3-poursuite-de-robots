@@ -12,17 +12,19 @@ public class Case {
 
     /**
      * constructeur par défaut
+     *
      * @param x
      * @param y
      */
     public Case(int x, int y) {
         this.x = x;
         this.y = y;
-        Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Crée une case => case:"+this.toString());
+        Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Crée une case => case:" + this.toString());
     }
 
     /**
      * retourne le x
+     *
      * @return x
      */
     public int getX() {
@@ -31,6 +33,7 @@ public class Case {
 
     /**
      * modifie le x
+     *
      * @param x
      */
     public void setX(int x) {
@@ -39,6 +42,7 @@ public class Case {
 
     /**
      * retourne le y
+     *
      * @return y
      */
     public int getY() {
@@ -47,6 +51,7 @@ public class Case {
 
     /**
      * modifie le y
+     *
      * @param y
      */
     public void setY(int y) {
@@ -55,6 +60,7 @@ public class Case {
 
     /**
      * retourne le status de la case
+     *
      * @return status de la case
      */
     public StatusCase getStatusCase() {
@@ -63,6 +69,7 @@ public class Case {
 
     /**
      * modifie le status de la case
+     *
      * @param statusCase
      */
     public void setStatusCase(StatusCase statusCase) {
@@ -71,6 +78,7 @@ public class Case {
 
     /**
      * retourne si la case est decouvert
+     *
      * @return decouvert
      */
     public boolean isDecouvert() {
@@ -79,6 +87,7 @@ public class Case {
 
     /**
      * modifie le fait que la
+     *
      * @param decouvert
      */
     public void setDecouvert(boolean decouvert) {

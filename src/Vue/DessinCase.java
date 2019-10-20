@@ -7,16 +7,16 @@ import javafx.scene.shape.Rectangle;
 
 public class DessinCase extends Rectangle {
 
-    private int posX;
-    private int posY;
-    private StatusCase statusCase;
-    private boolean decouvert = false;
-    private boolean lue = false;
     public static Color couleurCacher = Color.BLACK;
     public static Color couleurVide = Color.LIGHTGRAY;
     public static Color couleurMur = Color.WHITE;
     public static Color couleurMessage = Color.YELLOW;
     public static Color couleurSortie = Color.BLUE;
+    private int posX;
+    private int posY;
+    private StatusCase statusCase;
+    private boolean decouvert = false;
+    private boolean lue = false;
 
     public DessinCase(int posX, int posY, StatusCase statusCase) {
 
@@ -40,7 +40,7 @@ public class DessinCase extends Rectangle {
                     this.setFill(DessinCase.couleurVide);
                     break;
                 case MESSAGE:
-                    this.setFill((this.lue)?DessinCase.couleurMessage:DessinCase.couleurMur);
+                    this.setFill((this.lue) ? DessinCase.couleurMessage : DessinCase.couleurMur);
                     break;
             }
         } else {

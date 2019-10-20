@@ -31,8 +31,8 @@ public class Terrain {
 
         Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Ajoute les 4 sortie");
         Case sortie = null;
-        int motierX = (int) (Main.TAILLE_X - 1) / 2;
-        int motierY = (int) (Main.TAILLE_Y - 1) / 2;
+        int motierX = (Main.TAILLE_X - 1) / 2;
+        int motierY = (Main.TAILLE_Y - 1) / 2;
         sortie = this.getCaseViaPosition(motierX, 0);
         this.casesVide.remove(sortie);
         sortie.setStatusCase(StatusCase.SORTIE);
@@ -56,10 +56,10 @@ public class Terrain {
                 casesAVirer.add(c);
             }
         });
-        casesAVirer.forEach(c-> this.casesVide.remove(c));
+        casesAVirer.forEach(c -> this.casesVide.remove(c));
 
         Logger.getInstance().ajouteUneLigne(TypeLog.DEBUG, "Vérifie si il reste assez de plasse");
-        if (this.casesVide.size() < Main.NB_ROBOTS+1+1) {
+        if (this.casesVide.size() < Main.NB_ROBOTS + 1 + 1) {
             try {
                 throw new Exception("Il n'y a pas assez de casse libre pour placer les robots et pour le joueur");
             } catch (Exception e) {
@@ -87,7 +87,7 @@ public class Terrain {
         this.intrus = new Intrus(caseIntru);
     }
 
-    public static Terrain getInstance(){
+    public static Terrain getInstance() {
         return Terrain.terrain;
     }
 

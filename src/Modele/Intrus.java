@@ -21,6 +21,6 @@ public class Intrus extends Perssonage {
 
     @Override
     public String toString() {
-        return "Intrus {case:"+this.caseActuel.toString()+"; status:"+this.statusIntru+"}";
+        return "Intrus {case:" + this.caseActuel.toString() + "; status:" + this.statusIntru + "}";
     }
 }

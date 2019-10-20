@@ -52,6 +52,7 @@ public class Logger {
 
     /**
      * Permet de récuperer l'intance du logger
+     *
      * @return Logger l'intance du logger
      */
     public static Logger getInstance() {
@@ -60,6 +61,7 @@ public class Logger {
 
     /**
      * Permet de vérifier si la log doit être inscrit dans le fichier
+     *
      * @param typeLog
      * @return boolean
      */
@@ -75,6 +77,7 @@ public class Logger {
 
     /**
      * Permet d'ecrire une ligne dans le fichier
+     *
      * @param date
      * @param typeLog
      * @param msg
@@ -94,6 +97,7 @@ public class Logger {
 
     /**
      * Methode a appeler pour ajouter une log
+     *
      * @param typeLog
      * @param msg
      * @return
