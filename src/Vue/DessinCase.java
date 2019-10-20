@@ -18,6 +18,13 @@ public class DessinCase extends Rectangle {
     private boolean decouvert = false;
     private boolean lue = false;
 
+    /**
+     * costructeur par defaut
+     *
+     * @param posX
+     * @param posY
+     * @param statusCase
+     */
     public DessinCase(int posX, int posY, StatusCase statusCase) {
 
         super((posX * Main.tailleCase + Main.tailleCase), (posY * Main.tailleCase + Main.tailleCase), Main.tailleCase, Main.tailleCase);
@@ -27,6 +34,9 @@ public class DessinCase extends Rectangle {
         this.appliqueCouleur();
     }
 
+    /**
+     * applique la couleur de la case en fonction du statut et du fait quelle est etais vue ou lue
+     */
     public void appliqueCouleur() {
         if (this.decouvert) {
             switch (this.statusCase) {
@@ -48,42 +58,34 @@ public class DessinCase extends Rectangle {
         }
     }
 
+    /**
+     * retourne la postion en x de la case
+     * @return x
+     */
     public int getPosX() {
         return posX;
     }
 
-    public void setPosX(int posX) {
-        this.posX = posX;
-    }
-
+    /**
+     * retourne la postion en y de la case
+     * @return y
+     */
     public int getPosY() {
         return posY;
     }
 
-    public void setPosY(int posY) {
-        this.posY = posY;
-    }
-
-    public StatusCase getStatusCase() {
-        return statusCase;
-    }
-
-    public void setStatusCase(StatusCase statusCase) {
-        this.statusCase = statusCase;
-    }
-
-    public boolean isDecouvert() {
-        return decouvert;
-    }
-
+    /**
+     * modifie le fait de la découvert
+     * @param decouvert
+     */
     public void setDecouvert(boolean decouvert) {
         this.decouvert = decouvert;
     }
 
-    public boolean isLue() {
-        return lue;
-    }
-
+    /**
+     * modifie le fait que la case soit lue
+     * @param lue
+     */
     public void setLue(boolean lue) {
         this.lue = lue;
     }

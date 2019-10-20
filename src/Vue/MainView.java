@@ -34,30 +34,52 @@ public class MainView extends Application {
     private ArrayList<DessinRobots> dessinRobots = new ArrayList<DessinRobots>();
     private Timeline littleCycle;
 
+    /**
+     * retourne le singleton
+     *
+     * @return le singleton
+     */
     public static MainView getInstance() {
         return MainView.mainView;
     }
 
+    /**
+     * permet de récuperer la scene
+     * @return screne
+     */
     public Scene getScene() {
         return scene;
     }
 
-    public DessinIntrus getDessinIntru() {
-        return dessinIntru;
-    }
-
+    /**
+     * retourne les dessin des robots
+     * @return dessin robots
+     */
     public ArrayList<DessinRobots> getDessinRobots() {
         return dessinRobots;
     }
 
+    /**
+     * retoure la timeline
+     * @return timeline
+     */
     public Timeline getLittleCycle() {
         return littleCycle;
     }
 
+    /**
+     * permet de lancer la vue
+     * @param args
+     */
     public void lancement(String[] args) {
         launch(args);
     }
 
+    /**
+     * methode initialisant la vue
+     * @param primaryStage
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         width = Main.TAILLE_X * Main.tailleCase + (2 * Main.tailleCase);
@@ -65,6 +87,10 @@ public class MainView extends Application {
         construirePlateauJeu(primaryStage);
     }
 
+    /**
+     * methode permetant de crée la vue
+     * @param primaryStage
+     */
     void construirePlateauJeu(Stage primaryStage) {
         Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Crée le plateau");
         this.troupe = new Group();
@@ -119,6 +145,9 @@ public class MainView extends Application {
         littleCycle.play();
     }
 
+    /**
+     * manime les éléments
+     */
     private void animation() {
         Integer[] i = {0};
         MainView mainView = this;
@@ -132,6 +161,9 @@ public class MainView extends Application {
         Robot.setNbTickDeRecherche(Robot.getNbTickDeRecherche() - 1);
     }
 
+    /**
+     *  methode permetant de crée les élément comme les caise et le robots
+     */
     private void dessinEnvironnement() {
         Logger.getInstance().ajouteUneLigne(TypeLog.DEBUG, "Dessine les case");
         for (Case caseTerain : Terrain.getInstance().getCases()) {
@@ -150,6 +182,12 @@ public class MainView extends Application {
         });
     }
 
+    /**
+     * permet de retouner un dessin de case a partire de sa position
+     * @param x
+     * @param y
+     * @return case
+     */
     public DessinCase getCaseViaPosition(int x, int y) {
         final DessinCase[] res = {null};
         this.dessinCases.forEach(c -> {

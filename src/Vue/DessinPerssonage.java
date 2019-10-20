@@ -16,6 +16,12 @@ public abstract class DessinPerssonage extends Circle {
     private int posX;
     private int posY;
 
+    /**
+     * constructeur par defaut
+     * @param posX
+     * @param posY
+     * @param color
+     */
     public DessinPerssonage(int posX, int posY, Color color) {
         super((posX * Main.tailleCase + Main.tailleCase + Main.tailleCase / 2), (posY * Main.tailleCase + Main.tailleCase + Main.tailleCase / 2), Main.tailleCase / 1.5);
         this.posX = posX;
@@ -24,22 +30,11 @@ public abstract class DessinPerssonage extends Circle {
         this.setSmooth(true);
     }
 
-    public int getPosX() {
-        return posX;
-    }
-
-    public void setPosX(int posX) {
-        this.posX = posX;
-    }
-
-    public int getPosY() {
-        return posY;
-    }
-
-    public void setPosY(int posY) {
-        this.posY = posY;
-    }
-
+    /**
+     * calcul et déplace le perssonage
+     * @param x
+     * @param y
+     */
     public void calculPosition(int x, int y) {
         this.posX += x;
         this.posY += y;
