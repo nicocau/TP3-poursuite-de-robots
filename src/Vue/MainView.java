@@ -1,6 +1,7 @@
 package Vue;
 
 import Controleur.Controleur;
+import Controleur.MenuControleur;
 import Controleur.TypeDeplacement;
 import Log.Logger;
 import Log.TypeLog;
@@ -13,10 +14,13 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -87,9 +91,49 @@ public class MainView extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
+        this.ouvreMenu(primaryStage);
         width = Main.TAILLE_X * Main.tailleCase + (2 * Main.tailleCase);
         height = Main.TAILLE_Y * Main.tailleCase + (2 * Main.tailleCase);
         construirePlateauJeu(primaryStage);
+    }
+
+    /**
+     * Permet d'ouvrire le menue
+     * @param primaryStage
+     */
+    private void ouvreMenu(Stage primaryStage) {
+
+        //chargement du fichier FXML
+        String sceneFile = "/VueFXML/menu.fxml";
+        AnchorPane page = null;
+        FXMLLoader fxmlLoader =null;
+        try
+        {
+            fxmlLoader = new FXMLLoader(getClass().getResource( sceneFile ));
+            page =fxmlLoader.load();
+        }
+        catch ( Exception ex )  {ex.printStackTrace();}
+
+        //si le chargement a reussi
+        if (page!=null)
+        {
+            //creation d'une petite fenetre et de son theatre
+            Stage dialogStage = new Stage();
+
+            dialogStage.setTitle("Choix des couleurs...");
+            //fenetre modale, obligation de quitter pour revenir a la fenetre principale
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            //dialogue modale liee a la fenetre parente
+            dialogStage.initOwner(primaryStage);
+            //creation de la scene a partir de la page chargee du fichier fxml
+            Scene miniScene = new Scene(page);
+            dialogStage.setScene(miniScene);
+            //recuperation du controleur associe a la fenetre
+            MenuControleur controller = fxmlLoader.getController();
+            //affichage de la fenetre
+            dialogStage.showAndWait();
+        }
+
     }
 
     /**

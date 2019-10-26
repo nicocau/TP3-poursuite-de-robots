@@ -5,16 +5,16 @@ import Log.TypeLog;
 import Vue.MainView;
 
 public class Main {
-    public static final int TAILLE_X = 20;
-    public static final int TAILLE_Y = 30;
-    public static final int NB_ROBOTS = 3;
-    public static final int DISTANCE_VUE = 4;
-    public static final int DISTANCE_VUE_MESSAGE = 2;
-    public static final int DISTANCE_VUE_ROBOT = 5;
-    public static final double POURCENTAGE_MUR = 0.1;
-    public static final long tempo = 500;
+    public static Integer TAILLE_X = 20;
+    public static Integer TAILLE_Y = 30;
+    public static Integer NB_ROBOTS = 3;
+    public static Integer DISTANCE_VUE = 4;
+    public static Integer DISTANCE_VUE_MESSAGE = 2;
+    public static Integer DISTANCE_VUE_ROBOT = 3;
+    public static Double POURCENTAGE_MUR = 0.1;
+    public static Double tempo = 500.0;
     public static final int tailleCase = 10;
-    public static final int NB_TICKE_RECHECHERCHE = 5;
+    public static Integer NB_TICKE_RECHECHERCHE = 5;
 
     /**
      * Main
