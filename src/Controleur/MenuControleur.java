@@ -1,12 +1,14 @@
 package Controleur;
 
 import Main.Main;
+import Modele.Niveau;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -14,26 +16,41 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.ResourceBundle;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 public class MenuControleur implements Initializable {
-    @FXML private Button closeButton;
+    @FXML
+    private ComboBox<Niveau> niveaus;
+    @FXML
+    private Button closeButton;
 
-    public Spinner<Integer> editTailleX;
-    public Spinner<Integer> editTailleY;
-    public Spinner<Integer> editNbRobot;
-    public Spinner<Integer> editVueJouer;
-    public Spinner<Integer> editLectureJoueur;
-    public Spinner<Integer> editVueRobot;
-    public Spinner<Double> editPencentageMure;
-    public Spinner<Double> editVittes;
-    public Spinner<Integer> editTickeRechercheRobot;
+    @FXML
+    private Spinner<Integer> editTailleX;
+    @FXML
+    private Spinner<Integer> editTailleY;
+    @FXML
+    private Spinner<Integer> editNbRobot;
+    @FXML
+    private Spinner<Integer> editVueJouer;
+    @FXML
+    private Spinner<Integer> editLectureJoueur;
+    @FXML
+    private Spinner<Integer> editVueRobot;
+    @FXML
+    private Spinner<Double> editPencentageMure;
+    @FXML
+    private Spinner<Double> editVittes;
+    @FXML
+    private Spinner<Integer> editTickeRechercheRobot;
+
     private HashSet<Spinner> spinners = new HashSet<Spinner>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        this.chargeCSS();
         this.editTailleX.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(10, 100, Main.TAILLE_X));
         this.editTailleX.valueProperty().addListener((obs, oldValue, newValue) -> Main.TAILLE_X = newValue);
         spinners.add(this.editTailleX);
@@ -67,10 +84,31 @@ public class MenuControleur implements Initializable {
         });
     }
 
+    private void chargeCSS() {
+        ObservableList<Niveau> observableList = FXCollections.observableArrayList();
+        Path orderPath = Paths.get("./src/Config/config.csv");
+        try {
+            List<String>lignes = Files.readAllLines(orderPath);
+            lignes.forEach(ligne -> {
+                String[] split = ligne.split(",");
+                observableList.add(new Niveau(split[0],Integer.valueOf(split[1]),Integer.valueOf(split[2]),Double.valueOf(split[3]),Integer.valueOf(split[4]),Double.valueOf(split[5])));
+            });
+        } catch (IOException e) {
+            System.out.println("Impossible de lire le fichier des commandes");
+        }
+        this.niveaus.setItems(observableList);
+    }
+
     public void valide(MouseEvent mouseEvent) {
-        // get a handle to the stage
         Stage stage = (Stage) closeButton.getScene().getWindow();
-        // do what you have to do
         stage.close();
+    }
+
+    public void modificationNiveau(ActionEvent actionEvent) {
+        Niveau niveau = this.niveaus.getValue();
+        this.editNbRobot.getValueFactory().setValue(niveau.getNbRobots());
+        this.editVittes.getValueFactory().setValue(niveau.getVittesseRobot());
+        this.editVueJouer.getValueFactory().setValue(niveau.getChampDeVision());
+        this.editPencentageMure.getValueFactory().setValue(niveau.getDensiteCaise());
     }
 }
