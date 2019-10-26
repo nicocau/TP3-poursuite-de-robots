@@ -6,6 +6,8 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/lib" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/VueFXML" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/config" type="java-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/save" type="java-resource" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
