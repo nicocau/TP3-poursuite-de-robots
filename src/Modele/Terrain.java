@@ -1,6 +1,5 @@
 package Modele;
 
-import Controleur.Controleur;
 import Log.Logger;
 import Log.TypeLog;
 import Main.Main;
