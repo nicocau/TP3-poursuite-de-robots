@@ -12,8 +12,14 @@ import javafx.scene.paint.Color;
 
 
 public class Controleur {
+    /**
+     * Crée le terrain et le lie au controlleur
+     */
     private Terrain terrain = new Terrain();
-    private MainView mainView = new MainView();
+    /**
+     * Vue principale
+     */
+    private MainView mainView;
 
     /**
      * Le contructeur par défaut
@@ -22,20 +28,20 @@ public class Controleur {
         this.mainView = mainView;
     }
 
+    /**
+     * permet de récuper le terrain
+     * @return Terrain
+     */
     public Terrain getTerrain() {
         return terrain;
     }
 
+    /**
+     * Permet de modifier le terrain
+     * @param terrain a modifier
+     */
     public void setTerrain(Terrain terrain) {
         this.terrain = terrain;
-    }
-
-    public MainView getMainView() {
-        return mainView;
-    }
-
-    public void setMainView(MainView mainView) {
-        this.mainView = mainView;
     }
 
     /**

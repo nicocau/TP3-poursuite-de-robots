@@ -22,35 +22,76 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class MenuControleur implements Initializable {
+    /**
+     * Liste des niveau
+     */
     @FXML
     private ComboBox<Niveau> niveaus;
+    /**
+     * Bouton de validation
+     */
     @FXML
     private Button closeButton;
 
+    /**
+     * Spiner pout le nombre de case en x
+     */
     @FXML
     private Spinner<Integer> editTailleX;
+    /**
+     * Spiner pout le nombre de case en y
+     */
     @FXML
     private Spinner<Integer> editTailleY;
+    /**
+     * Spiner pout le nombre de robot
+     */
     @FXML
     private Spinner<Integer> editNbRobot;
+    /**
+     * Spiner pout la distance de vue du joueur
+     */
     @FXML
     private Spinner<Integer> editVueJouer;
+    /**
+     * Spiner pout la distance de lecture du joueur
+     */
     @FXML
     private Spinner<Integer> editLectureJoueur;
+    /**
+     * Spiner pout la distance de vue des robots
+     */
     @FXML
     private Spinner<Integer> editVueRobot;
+    /**
+     * Spiner pout le pourcentage de mur
+     */
     @FXML
     private Spinner<Double> editPencentageMure;
+    /**
+     * Spiner pout la vittesse des robots
+     */
     @FXML
     private Spinner<Double> editVittes;
+    /**
+     * Spiner pout le nombre de tique de recherche des robots
+     */
     @FXML
     private Spinner<Integer> editTickeRechercheRobot;
 
+    /**
+     * Liste des spinners (on peut utiliser un hashSet car on n'a pas besoin de garder l'ordre dans les spinner n'est pas important)
+     */
     private HashSet<Spinner> spinners = new HashSet<Spinner>();
 
+    /**
+     * Permet d'initialiser les spiner avec les min et les max ainssi que les listener
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.chargeCSS();
+        this.chargeCSV();
         this.editTailleX.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(10, 100, Main.TAILLE_X));
         this.editTailleX.valueProperty().addListener((obs, oldValue, newValue) -> Main.TAILLE_X = newValue);
         spinners.add(this.editTailleX);
@@ -84,7 +125,10 @@ public class MenuControleur implements Initializable {
         });
     }
 
-    private void chargeCSS() {
+    /**
+     * Permet de récupérer les différent niveau stoquer dans le fichier de fonfig des niveau
+     */
+    private void chargeCSV() {
         ObservableList<Niveau> observableList = FXCollections.observableArrayList();
         Path orderPath = Paths.get("./src/Config/config.csv");
         try {
@@ -99,6 +143,10 @@ public class MenuControleur implements Initializable {
         this.niveaus.setItems(observableList);
     }
 
+    /**
+     * Evenenement déclancer l'ors du clique sur le bouton valiser et permet d'appliquer les valeur ansie que de fermer la fennetre
+     * @param mouseEvent
+     */
     public void valide(MouseEvent mouseEvent) {
         Main.TAILLE_X = this.editTailleX.getValue();
         Main.TAILLE_Y = this.editTailleY.getValue();
@@ -113,6 +161,10 @@ public class MenuControleur implements Initializable {
         stage.close();
     }
 
+    /**
+     * Applique le niveau selectioner (modifie les champ et applique les valeur)
+     * @param actionEvent
+     */
     public void modificationNiveau(ActionEvent actionEvent) {
         Niveau niveau = this.niveaus.getValue();
         this.editNbRobot.getValueFactory().setValue(niveau.getNbRobots());
