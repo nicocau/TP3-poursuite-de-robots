@@ -19,10 +19,7 @@ public class Controleur {
      * Le contructeur par défaut
      */
     public Controleur(MainView mainView) {
-        this.terrain.setControleur(this);
         this.mainView = mainView;
-//        this.mainView.setControleur(this);
-//        this.mainView.lancement(args, this);
     }
 
     public Terrain getTerrain() {

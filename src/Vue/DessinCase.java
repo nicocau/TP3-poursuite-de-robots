@@ -25,12 +25,14 @@ public class DessinCase extends Rectangle {
      * @param posY
      * @param statusCase
      */
-    public DessinCase(int posX, int posY, StatusCase statusCase) {
+    public DessinCase(int posX, int posY, StatusCase statusCase, boolean decouvert, boolean lue) {
 
         super((posX * Main.tailleCase + Main.tailleCase), (posY * Main.tailleCase + Main.tailleCase), Main.tailleCase, Main.tailleCase);
         this.posX = posX;
         this.posY = posY;
         this.statusCase = statusCase;
+        this.decouvert = decouvert;
+        this.lue = lue;
         this.appliqueCouleur();
     }
 

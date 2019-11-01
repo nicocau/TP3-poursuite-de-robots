@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Terrain {
-    private Controleur controleur;
 
     private ArrayList<Case> cases = new ArrayList<Case>();
     private ArrayList<Case> casesVide = new ArrayList<Case>();
@@ -90,14 +89,6 @@ public class Terrain {
         Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Ajoute l'intru'");
         Case caseIntru = this.casesVide.get(random.nextInt(this.casesVide.size()));
         this.intrus = new Intrus(caseIntru);
-    }
-
-    public Controleur getControleur() {
-        return controleur;
-    }
-
-    public void setControleur(Controleur controleur) {
-        this.controleur = controleur;
     }
 
     /**

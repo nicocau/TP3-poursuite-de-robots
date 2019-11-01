@@ -10,26 +10,36 @@ import Modele.Case;
 import Modele.Robot;
 import Modele.StatusRobo;
 import Modele.Terrain;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 
 public class MainView extends Application {
 
+    public static final String SRC_SAVE = "./src/save/";
     private Controleur controleur;
-//    private final static MainView mainView = new MainView();
     private double width = 0;
     private double height = 0;
     private Scene scene;
@@ -45,6 +55,10 @@ public class MainView extends Application {
 
     public void setControleur(Controleur controleur) {
         this.controleur = controleur;
+    }
+
+    public DessinIntrus getDessinIntru() {
+        return dessinIntru;
     }
 
     /**
@@ -74,18 +88,6 @@ public class MainView extends Application {
         return littleCycle;
     }
 
-//    /**
-//     * permet de lancer la vue
-//     *
-//     * @param args
-//     * @param controleur
-//     */
-//    public void lancement(String[] args, Controleur controleur) {
-//        this.setControleur(controleur);
-//        this.controleur.setMainView(this);
-//        launch(args);
-//    }
-
     /**
      * methode initialisant la vue
      *
@@ -94,8 +96,13 @@ public class MainView extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        this.ouvreMenu(primaryStage);
-        this.controleur = new Controleur(this);
+        if (Files.exists(Paths.get(SRC_SAVE + "main.json")) && Files.exists(Paths.get(SRC_SAVE + "terrain.json"))) {
+            this.controleur = new Controleur(this);
+            this.chargeSauvegarde();
+        } else {
+            this.ouvreMenu(primaryStage);
+            this.controleur = new Controleur(this);
+        }
         width = Main.TAILLE_X * Main.tailleCase + (2 * Main.tailleCase);
         height = Main.TAILLE_Y * Main.tailleCase + (2 * Main.tailleCase);
         construirePlateauJeu(primaryStage);
@@ -118,23 +125,16 @@ public class MainView extends Application {
         }
         catch ( Exception ex )  {ex.printStackTrace();}
 
-        //si le chargement a reussi
         if (page!=null)
         {
-            //creation d'une petite fenetre et de son theatre
             Stage dialogStage = new Stage();
 
-            dialogStage.setTitle("Choix des couleurs...");
-            //fenetre modale, obligation de quitter pour revenir a la fenetre principale
+            dialogStage.setTitle("Configuration de la partie");
             dialogStage.initModality(Modality.WINDOW_MODAL);
-            //dialogue modale liee a la fenetre parente
             dialogStage.initOwner(primaryStage);
-            //creation de la scene a partir de la page chargee du fichier fxml
             Scene miniScene = new Scene(page);
             dialogStage.setScene(miniScene);
-            //recuperation du controleur associe a la fenetre
             MenuControleur controller = fxmlLoader.getController();
-            //affichage de la fenetre
             dialogStage.showAndWait();
         }
 
@@ -147,44 +147,37 @@ public class MainView extends Application {
      */
     void construirePlateauJeu(Stage primaryStage) {
         Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Crée le plateau");
+        MenuBar menuBar = new MenuBar();
+
+        Menu menuActions = new Menu("Actions");
+        MenuItem menuPause = new MenuItem("Pause");
+        MenuItem menuReprise = new MenuItem("Reprise");
+        menuPause.setOnAction(e -> {
+            this.pause();
+            menuActions.getItems().set(0, menuReprise);
+        });
+        menuReprise.setOnAction(e -> {
+            this.reprend();
+            menuActions.getItems().set(0, menuPause);
+        });
+        MenuItem menuSauvegarder = new MenuItem("Sauvegarder");
+        menuSauvegarder.setOnAction(e -> this.sauvegarde());
+        MenuItem menuQuitter = new MenuItem("Quitter");
+        menuQuitter.setOnAction(e -> primaryStage.close());
+        menuActions.getItems().addAll(menuPause, menuSauvegarder, menuQuitter);
+
+        menuBar.getMenus().addAll(menuActions);
+
+        BorderPane root = new BorderPane();
+        root.setTop(menuBar);
         this.troupe = new Group();
-        this.scene = new Scene(troupe, width, height, Color.ANTIQUEWHITE);
+        root.setCenter(troupe);
         this.dessinEnvironnement();
+        this.scene = new Scene(root, width + 10, height + 30, Color.ANTIQUEWHITE);
         this.scene.setFill(Color.DARKGRAY);
 
-        DessinIntrus dessinIntrus = this.dessinIntru;
-        MainView mainView = this;
         Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Crée les touche");
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent keyEvent) {
-                switch (keyEvent.getCode()) {
-                    case UP:
-                    case Z:
-                        Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Déplace le joueur en haut");
-                        mainView.controleur.Deplacement(TypeDeplacement.HAUT, mainView.controleur.getTerrain().getIntrus(), dessinIntrus, mainView);
-                        break;
-                    case DOWN:
-                    case S:
-                        Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Déplace le joueur en bas");
-                        mainView.controleur.Deplacement(TypeDeplacement.BAS, mainView.controleur.getTerrain().getIntrus(), dessinIntrus, mainView);
-                        break;
-                    case LEFT:
-                    case Q:
-                        Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Déplace le joueur a gauche");
-                        mainView.controleur.Deplacement(TypeDeplacement.GAUCHE, mainView.controleur.getTerrain().getIntrus(), dessinIntrus, mainView);
-                        break;
-                    case RIGHT:
-                    case D:
-                        Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Déplace le joueur a droit");
-                        mainView.controleur.Deplacement(TypeDeplacement.DROITE, mainView.controleur.getTerrain().getIntrus(), dessinIntrus, mainView);
-                        break;
-                    case SPACE:
-                        Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Clique sur espace");
-                        mainView.controleur.PrendMsg(mainView, mainView.dessinIntru);
-                        break;
-                }
-            }
-        });
+        this.ajouteLesComande(scene, this);
 
         primaryStage.setTitle("Poursuite de robots");
         primaryStage.setScene(scene);
@@ -197,6 +190,62 @@ public class MainView extends Application {
                 }));
         littleCycle.setCycleCount(Timeline.INDEFINITE);
         littleCycle.play();
+    }
+
+    private void ajouteLesComande(Scene scene, MainView mainView) {
+        scene.setOnKeyPressed(keyEvent -> {
+            switch (keyEvent.getCode()) {
+                case UP:
+                case Z:
+                    Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Déplace le joueur en haut");
+                    mainView.controleur.Deplacement(TypeDeplacement.HAUT, mainView.controleur.getTerrain().getIntrus(), mainView.getDessinIntru(), mainView);
+                    break;
+                case DOWN:
+                case S:
+                    Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Déplace le joueur en bas");
+                    mainView.controleur.Deplacement(TypeDeplacement.BAS, mainView.controleur.getTerrain().getIntrus(), mainView.getDessinIntru(), mainView);
+                    break;
+                case LEFT:
+                case Q:
+                    Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Déplace le joueur a gauche");
+                    mainView.controleur.Deplacement(TypeDeplacement.GAUCHE, mainView.controleur.getTerrain().getIntrus(), mainView.getDessinIntru(), mainView);
+                    break;
+                case RIGHT:
+                case D:
+                    Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Déplace le joueur a droit");
+                    mainView.controleur.Deplacement(TypeDeplacement.DROITE, mainView.controleur.getTerrain().getIntrus(), mainView.getDessinIntru(), mainView);
+                    break;
+                case SPACE:
+                    Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Clique sur espace");
+                    mainView.controleur.PrendMsg(mainView, mainView.dessinIntru);
+                    break;
+                case M:
+                    mainView.sauvegarde();
+                    break;
+                case P:
+                    mainView.pause();
+                    break;
+                case R:
+                    mainView.reprend();
+                    break;
+            }
+        });
+    }
+
+    private void ajouteLesComandePause(Scene scene, MainView mainView) {
+        scene.setOnKeyPressed(keyEvent -> {
+            switch (keyEvent.getCode()) {
+                case M:
+                    mainView.sauvegarde();
+                    break;
+                case P:
+                    mainView.pause();
+                    break;
+                case R:
+                    mainView.reprend();
+                    break;
+            }
+        });
     }
 
     /**
@@ -221,7 +270,7 @@ public class MainView extends Application {
     private void dessinEnvironnement() {
         Logger.getInstance().ajouteUneLigne(TypeLog.DEBUG, "Dessine les case");
         for (Case caseTerain : this.controleur.getTerrain().getCases()) {
-            DessinCase dessinCase = new DessinCase(caseTerain.getX(), caseTerain.getY(), caseTerain.getStatusCase());
+            DessinCase dessinCase = new DessinCase(caseTerain.getX(), caseTerain.getY(), caseTerain.getStatusCase(), caseTerain.isDecouvert(), caseTerain.isLue());
             this.dessinCases.add(dessinCase);
             this.troupe.getChildren().add(dessinCase);
         }
@@ -251,5 +300,91 @@ public class MainView extends Application {
             }
         });
         return res[0];
+    }
+
+    private void sauvegarde() {
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        Path orderPath;
+        orderPath = Paths.get(SRC_SAVE + "main.json");
+        try {
+            if (Files.exists(orderPath)) {
+                Files.delete(orderPath);
+            }
+            HashMap<String, Object> mainArray = new HashMap<>();
+            mainArray.put("TAILLE_X", Main.TAILLE_X);
+            mainArray.put("TAILLE_Y", Main.TAILLE_Y);
+            mainArray.put("NB_ROBOTS", Main.NB_ROBOTS);
+            mainArray.put("DISTANCE_VUE", Main.DISTANCE_VUE);
+            mainArray.put("DISTANCE_VUE_MESSAGE", Main.DISTANCE_VUE_MESSAGE);
+            mainArray.put("DISTANCE_VUE_ROBOT", Main.DISTANCE_VUE_ROBOT);
+            mainArray.put("POURCENTAGE_MUR", Main.POURCENTAGE_MUR);
+            mainArray.put("tempo", Main.tempo);
+            mainArray.put("NB_TICKE_RECHECHERCHE", Main.NB_TICKE_RECHECHERCHE);
+            String json = gson.toJson(mainArray);
+            Files.writeString(orderPath, json);
+        } catch (IOException e) {
+            System.out.println("Impossible d'écrire dans le fichier de sauvegarde");
+        }
+        orderPath = Paths.get(SRC_SAVE + "terrain.json");
+        try {
+            if (Files.exists(orderPath)) {
+                Files.delete(orderPath);
+            }
+            String json = gson.toJson(this.controleur.getTerrain());
+            Files.writeString(orderPath, json);
+        } catch (IOException e) {
+            System.out.println("Impossible d'écrire dans le fichier de sauvegarde");
+        }
+    }
+
+    private void chargeSauvegarde() {
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        Path orderPath;
+        orderPath = Paths.get(SRC_SAVE + "main.json");
+        try {
+            if (Files.exists(orderPath)) {
+                HashMap<String, Object> mainArray = new HashMap<String, Object>();
+                mainArray = gson.fromJson(Files.readString(orderPath), mainArray.getClass());
+                Double tmp;
+                tmp = (Double) mainArray.get("TAILLE_X");
+                Main.TAILLE_X = tmp.intValue();
+                tmp = (Double) mainArray.get("TAILLE_Y");
+                Main.TAILLE_Y = tmp.intValue();
+                tmp = (Double) mainArray.get("NB_ROBOTS");
+                Main.NB_ROBOTS = tmp.intValue();
+                tmp = (Double) mainArray.get("DISTANCE_VUE");
+                Main.DISTANCE_VUE = tmp.intValue();
+                tmp = (Double) mainArray.get("DISTANCE_VUE_MESSAGE");
+                Main.DISTANCE_VUE_MESSAGE = tmp.intValue();
+                tmp = (Double) mainArray.get("DISTANCE_VUE_ROBOT");
+                Main.DISTANCE_VUE_ROBOT = tmp.intValue();
+                Main.POURCENTAGE_MUR = (Double) mainArray.get("POURCENTAGE_MUR");
+                Main.tempo = (Double) mainArray.get("tempo");
+                tmp = (Double) mainArray.get("NB_TICKE_RECHECHERCHE");
+                Main.NB_TICKE_RECHECHERCHE = tmp.intValue();
+            }
+        } catch (IOException e) {
+            System.out.println("Impossible d'écrire dans le fichier de sauvegarde");
+        }
+        orderPath = Paths.get(SRC_SAVE + "terrain.json");
+        try {
+            if (Files.exists(orderPath)) {
+                this.controleur.setTerrain(gson.fromJson(Files.readString(orderPath), Terrain.class));
+            }
+        } catch (IOException e) {
+            System.out.println("Impossible d'écrire dans le fichier de sauvegarde");
+        }
+    }
+
+    private void pause() {
+        this.ajouteLesComandePause(this.scene, this);
+        this.littleCycle.pause();
+    }
+
+    private void reprend() {
+        this.ajouteLesComande(this.scene, this);
+        this.littleCycle.play();
     }
 }

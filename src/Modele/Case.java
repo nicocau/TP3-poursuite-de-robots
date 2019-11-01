@@ -79,6 +79,14 @@ public class Case {
         this.lue = lue;
     }
 
+    public boolean isDecouvert() {
+        return decouvert;
+    }
+
+    public boolean isLue() {
+        return lue;
+    }
+
     /**
      * retourne la description de l'objet
      *
