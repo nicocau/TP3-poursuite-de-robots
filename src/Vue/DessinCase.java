@@ -7,15 +7,45 @@ import javafx.scene.shape.Rectangle;
 
 public class DessinCase extends Rectangle {
 
+    /**
+     * couleur de la casse quand elle est cacher
+     */
     public static Color couleurCacher = Color.BLACK;
+    /**
+     * couleur quand la casse est vide et découvert
+     */
     public static Color couleurVide = Color.LIGHTGRAY;
+    /**
+     * couleur quand la casse est un mur et découvert
+     */
     public static Color couleurMur = Color.WHITE;
+    /**
+     * couleur quand la casse est la casse du message et découvert
+     */
     public static Color couleurMessage = Color.YELLOW;
+    /**
+     * couleur quand la casse est une sortie et découvert
+     */
     public static Color couleurSortie = Color.BLUE;
+    /**
+     * Possition de la case en x
+     */
     private int posX;
+    /**
+     * Position de la case en y
+     */
     private int posY;
+    /**
+     * Status de la case
+     */
     private StatusCase statusCase;
+    /**
+     * Savoir si la case a été découvert
+     */
     private boolean decouvert = false;
+    /**
+     * Savoir si la case a été lue (passer proche)
+     */
     private boolean lue = false;
 
     /**

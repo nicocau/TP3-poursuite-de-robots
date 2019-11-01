@@ -38,25 +38,52 @@ import java.util.HashMap;
 
 public class MainView extends Application {
 
+    /**
+     * Dossier dans le quelle se trouve les fichier de sauvegarde
+     */
     public static final String SRC_SAVE = "./src/save/";
+    /**
+     * Le controleur qui va gerer le lien entre la vue et le controleur
+     */
     private Controleur controleur;
+    /**
+     * Largeur de la fenetre
+     */
     private double width = 0;
+    /**
+     * Hauteur de la fenetre
+     */
     private double height = 0;
+    /**
+     * Scenne principale
+     */
     private Scene scene;
+    /**
+     * Troupe des éléments lier a la scene
+     */
     private Group troupe;
+    /**
+     * Liste des dessin des cases
+     */
     private ArrayList<DessinCase> dessinCases = new ArrayList<DessinCase>();
+    /**
+     * Dessin de l'intrus
+     */
     private DessinIntrus dessinIntru;
+    /**
+     * Liste des dessins des robots
+     */
     private ArrayList<DessinRobots> dessinRobots = new ArrayList<DessinRobots>();
+    /**
+     * Cycle de vie des robots (déplace les robots)
+     */
     private Timeline littleCycle;
 
-    public Controleur getControleur() {
-        return controleur;
-    }
-
-    public void setControleur(Controleur controleur) {
-        this.controleur = controleur;
-    }
-
+    /**
+     * Permet de récuperer le dessin de l'intru
+     *
+     * @return
+     */
     public DessinIntrus getDessinIntru() {
         return dessinIntru;
     }
@@ -192,6 +219,11 @@ public class MainView extends Application {
         littleCycle.play();
     }
 
+    /**
+     * Mets les comandes quand le jeux tourne
+     * @param scene
+     * @param mainView
+     */
     private void ajouteLesComande(Scene scene, MainView mainView) {
         scene.setOnKeyPressed(keyEvent -> {
             switch (keyEvent.getCode()) {
@@ -232,6 +264,11 @@ public class MainView extends Application {
         });
     }
 
+    /**
+     * Mettes les commande quand le jeux est en pausse
+     * @param scene
+     * @param mainView
+     */
     private void ajouteLesComandePause(Scene scene, MainView mainView) {
         scene.setOnKeyPressed(keyEvent -> {
             switch (keyEvent.getCode()) {
@@ -302,6 +339,9 @@ public class MainView extends Application {
         return res[0];
     }
 
+    /**
+     * Permetre d'enregistre la partie
+     */
     private void sauvegarde() {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
@@ -338,6 +378,9 @@ public class MainView extends Application {
         }
     }
 
+    /**
+     * Permet de réucupérer et de charger la sauvegarde
+     */
     private void chargeSauvegarde() {
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
@@ -378,11 +421,17 @@ public class MainView extends Application {
         }
     }
 
+    /**
+     * Permetre de metre en pause la partie
+     */
     private void pause() {
         this.ajouteLesComandePause(this.scene, this);
         this.littleCycle.pause();
     }
 
+    /**
+     * Permet de reprendre la partie aprés la pause
+     */
     private void reprend() {
         this.ajouteLesComande(this.scene, this);
         this.littleCycle.play();

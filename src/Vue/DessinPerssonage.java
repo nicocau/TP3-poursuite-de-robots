@@ -9,11 +9,29 @@ import javafx.scene.shape.Circle;
 import javafx.util.Duration;
 
 public abstract class DessinPerssonage extends Circle {
+    /**
+     * Couleur des robot quand il sont en patroulle
+     */
     public static Color couleurRobot = Color.RED;
+    /**
+     * Couleur des robot quand il sont en chase
+     */
     public static Color couleurRobotChase = Color.PURPLE;
+    /**
+     * Couleur de l'intru avant qu'il trouve les message
+     */
     public static Color couleurIntrus = Color.GREEN;
+    /**
+     * Couleur de l'intru aprés avoir trouver le message
+     */
     public static Color couleurIntrusMessage = Color.PINK;
+    /**
+     * Possition du perssonage en x
+     */
     private int posX;
+    /**
+     * Possition du perssonage en y
+     */
     private int posY;
 
     /**
