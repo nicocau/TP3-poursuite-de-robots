@@ -17,15 +17,4 @@ public class Main {
     public static volatile Integer NB_TICKE_RECHECHERCHE = 5;
 
     public static final int tailleCase = 10;
-
-    /**
-     * Main
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Lance le jeux");
-//        Controleur controleur = new Controleur(args);
-
-    }
 }
