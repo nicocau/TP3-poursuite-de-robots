@@ -94,8 +94,8 @@ public class MainView extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
-        this.controleur = new Controleur(this);
         this.ouvreMenu(primaryStage);
+        this.controleur = new Controleur(this);
         width = Main.TAILLE_X * Main.tailleCase + (2 * Main.tailleCase);
         height = Main.TAILLE_Y * Main.tailleCase + (2 * Main.tailleCase);
         construirePlateauJeu(primaryStage);

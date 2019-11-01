@@ -100,6 +100,15 @@ public class MenuControleur implements Initializable {
     }
 
     public void valide(MouseEvent mouseEvent) {
+        Main.TAILLE_X = this.editTailleX.getValue();
+        Main.TAILLE_Y = this.editTailleY.getValue();
+        Main.NB_ROBOTS = this.editNbRobot.getValue();
+        Main.DISTANCE_VUE = this.editVueJouer.getValue();
+        Main.DISTANCE_VUE_MESSAGE = this.editLectureJoueur.getValue();
+        Main.DISTANCE_VUE_ROBOT = this.editVueRobot.getValue();
+        Main.POURCENTAGE_MUR = this.editPencentageMure.getValue();
+        Main.tempo = this.editVittes.getValue();
+        Main.NB_TICKE_RECHECHERCHE = this.editTickeRechercheRobot.getValue();
         Stage stage = (Stage) closeButton.getScene().getWindow();
         stage.close();
     }
@@ -107,8 +116,12 @@ public class MenuControleur implements Initializable {
     public void modificationNiveau(ActionEvent actionEvent) {
         Niveau niveau = this.niveaus.getValue();
         this.editNbRobot.getValueFactory().setValue(niveau.getNbRobots());
+        Main.NB_ROBOTS = niveau.getNbRobots();
         this.editVittes.getValueFactory().setValue(niveau.getVittesseRobot());
+        Main.tempo = niveau.getVittesseRobot();
         this.editVueJouer.getValueFactory().setValue(niveau.getChampDeVision());
+        Main.DISTANCE_VUE = niveau.getChampDeVision();
         this.editPencentageMure.getValueFactory().setValue(niveau.getDensiteCaise());
+        Main.POURCENTAGE_MUR = niveau.getDensiteCaise();
     }
 }
