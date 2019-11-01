@@ -1,5 +1,6 @@
 package Modele;
 
+import Controleur.Controleur;
 import Log.Logger;
 import Log.TypeLog;
 import Main.Main;
@@ -8,7 +9,8 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Terrain {
-    private static final Terrain terrain = new Terrain();
+    private Controleur controleur;
+
     private ArrayList<Case> cases = new ArrayList<Case>();
     private ArrayList<Case> casesVide = new ArrayList<Case>();
     private ArrayList<Robot> robots = new ArrayList<Robot>();
@@ -18,7 +20,7 @@ public class Terrain {
     /**
      * construceur par défaut du terrain, il génére également les élément dépendent du terain
      */
-    private Terrain() {
+    public Terrain() {
 
         Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Création du Terrain");
 
@@ -90,13 +92,12 @@ public class Terrain {
         this.intrus = new Intrus(caseIntru);
     }
 
-    /**
-     * retourne le singleton du terrain
-     *
-     * @return le singleton du terain
-     */
-    public static Terrain getInstance() {
-        return Terrain.terrain;
+    public Controleur getControleur() {
+        return controleur;
+    }
+
+    public void setControleur(Controleur controleur) {
+        this.controleur = controleur;
     }
 
     /**

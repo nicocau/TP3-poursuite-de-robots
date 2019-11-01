@@ -75,7 +75,7 @@
                 </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="closeButton1" mnemonicParsing="false" onMouseClicked="#valide" text="Valider" />
+                  <Button fx:id="closeButton" mnemonicParsing="false" onMouseClicked="#valide" text="Valider" />
                </children>
             </HBox>
             </children>

@@ -28,7 +28,8 @@ import java.util.ArrayList;
 
 public class MainView extends Application {
 
-    private final static MainView mainView = new MainView();
+    private Controleur controleur;
+//    private final static MainView mainView = new MainView();
     private double width = 0;
     private double height = 0;
     private Scene scene;
@@ -38,13 +39,12 @@ public class MainView extends Application {
     private ArrayList<DessinRobots> dessinRobots = new ArrayList<DessinRobots>();
     private Timeline littleCycle;
 
-    /**
-     * retourne le singleton
-     *
-     * @return le singleton
-     */
-    public static MainView getInstance() {
-        return MainView.mainView;
+    public Controleur getControleur() {
+        return controleur;
+    }
+
+    public void setControleur(Controleur controleur) {
+        this.controleur = controleur;
     }
 
     /**
@@ -74,14 +74,17 @@ public class MainView extends Application {
         return littleCycle;
     }
 
-    /**
-     * permet de lancer la vue
-     *
-     * @param args
-     */
-    public void lancement(String[] args) {
-        launch(args);
-    }
+//    /**
+//     * permet de lancer la vue
+//     *
+//     * @param args
+//     * @param controleur
+//     */
+//    public void lancement(String[] args, Controleur controleur) {
+//        this.setControleur(controleur);
+//        this.controleur.setMainView(this);
+//        launch(args);
+//    }
 
     /**
      * methode initialisant la vue
@@ -91,6 +94,7 @@ public class MainView extends Application {
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
+        this.controleur = new Controleur(this);
         this.ouvreMenu(primaryStage);
         width = Main.TAILLE_X * Main.tailleCase + (2 * Main.tailleCase);
         height = Main.TAILLE_Y * Main.tailleCase + (2 * Main.tailleCase);
@@ -157,26 +161,26 @@ public class MainView extends Application {
                     case UP:
                     case Z:
                         Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Déplace le joueur en haut");
-                        Controleur.getInstance().Deplacement(TypeDeplacement.HAUT, Terrain.getInstance().getIntrus(), dessinIntrus, mainView);
+                        mainView.controleur.Deplacement(TypeDeplacement.HAUT, mainView.controleur.getTerrain().getIntrus(), dessinIntrus, mainView);
                         break;
                     case DOWN:
                     case S:
                         Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Déplace le joueur en bas");
-                        Controleur.getInstance().Deplacement(TypeDeplacement.BAS, Terrain.getInstance().getIntrus(), dessinIntrus, mainView);
+                        mainView.controleur.Deplacement(TypeDeplacement.BAS, mainView.controleur.getTerrain().getIntrus(), dessinIntrus, mainView);
                         break;
                     case LEFT:
                     case Q:
                         Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Déplace le joueur a gauche");
-                        Controleur.getInstance().Deplacement(TypeDeplacement.GAUCHE, Terrain.getInstance().getIntrus(), dessinIntrus, mainView);
+                        mainView.controleur.Deplacement(TypeDeplacement.GAUCHE, mainView.controleur.getTerrain().getIntrus(), dessinIntrus, mainView);
                         break;
                     case RIGHT:
                     case D:
                         Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Déplace le joueur a droit");
-                        Controleur.getInstance().Deplacement(TypeDeplacement.DROITE, Terrain.getInstance().getIntrus(), dessinIntrus, mainView);
+                        mainView.controleur.Deplacement(TypeDeplacement.DROITE, mainView.controleur.getTerrain().getIntrus(), dessinIntrus, mainView);
                         break;
                     case SPACE:
                         Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Clique sur espace");
-                        Controleur.getInstance().PrendMsg(mainView, mainView.dessinIntru);
+                        mainView.controleur.PrendMsg(mainView, mainView.dessinIntru);
                         break;
                 }
             }
@@ -201,10 +205,10 @@ public class MainView extends Application {
     private void animation() {
         Integer[] i = {0};
         MainView mainView = this;
-        Terrain.getInstance().getRobots().forEach(robot -> {
-            TypeDeplacement typeDeplacement = Controleur.getInstance().choseRobotMove(robot);
+        this.controleur.getTerrain().getRobots().forEach(robot -> {
+            TypeDeplacement typeDeplacement = this.controleur.choseRobotMove(robot);
             Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Anime le robot => robot:" + robot + "; deplacement: " + typeDeplacement);
-            Controleur.getInstance().Deplacement(typeDeplacement, robot, mainView.getDessinRobots().get(i[0]), mainView);
+            this.controleur.Deplacement(typeDeplacement, robot, mainView.getDessinRobots().get(i[0]), mainView);
             mainView.getDessinRobots().get(i[0]).setFill((robot.getStatusRobo() == StatusRobo.PATROUILLE) ? DessinPerssonage.couleurRobot : DessinPerssonage.couleurRobotChase);
             i[0] += 1;
         });
@@ -216,16 +220,16 @@ public class MainView extends Application {
      */
     private void dessinEnvironnement() {
         Logger.getInstance().ajouteUneLigne(TypeLog.DEBUG, "Dessine les case");
-        for (Case caseTerain : Terrain.getInstance().getCases()) {
+        for (Case caseTerain : this.controleur.getTerrain().getCases()) {
             DessinCase dessinCase = new DessinCase(caseTerain.getX(), caseTerain.getY(), caseTerain.getStatusCase());
             this.dessinCases.add(dessinCase);
             this.troupe.getChildren().add(dessinCase);
         }
         Logger.getInstance().ajouteUneLigne(TypeLog.DEBUG, "Desine l'intrus");
-        this.dessinIntru = new DessinIntrus(Terrain.getInstance().getIntrus().getCaseActuel().getX(), Terrain.getInstance().getIntrus().getCaseActuel().getY());
+        this.dessinIntru = new DessinIntrus(this.controleur.getTerrain().getIntrus().getCaseActuel().getX(), this.controleur.getTerrain().getIntrus().getCaseActuel().getY());
         this.troupe.getChildren().add(dessinIntru);
         Logger.getInstance().ajouteUneLigne(TypeLog.DEBUG, "Dessine les robot");
-        Terrain.getInstance().getRobots().forEach(robot -> {
+        this.controleur.getTerrain().getRobots().forEach(robot -> {
             DessinRobots dessinRobots = new DessinRobots(robot.getCaseActuel().getX(), robot.getCaseActuel().getY());
             this.troupe.getChildren().add(dessinRobots);
             this.dessinRobots.add(dessinRobots);

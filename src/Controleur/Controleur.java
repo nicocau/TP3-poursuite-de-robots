@@ -12,25 +12,33 @@ import javafx.scene.paint.Color;
 
 
 public class Controleur {
-    /**
-     * Le singleton
-     */
-    private static final Controleur controleur = new Controleur();
+    private Terrain terrain = new Terrain();
+    private MainView mainView = new MainView();
 
     /**
      * Le contructeur par défaut
      */
-    private Controleur() {
+    public Controleur(MainView mainView) {
+        this.terrain.setControleur(this);
+        this.mainView = mainView;
+//        this.mainView.setControleur(this);
+//        this.mainView.lancement(args, this);
     }
 
+    public Terrain getTerrain() {
+        return terrain;
+    }
 
-    /**
-     * Permet de récupérer le singleton
-     *
-     * @return Controleur
-     */
-    public static Controleur getInstance() {
-        return Controleur.controleur;
+    public void setTerrain(Terrain terrain) {
+        this.terrain = terrain;
+    }
+
+    public MainView getMainView() {
+        return mainView;
+    }
+
+    public void setMainView(MainView mainView) {
+        this.mainView = mainView;
     }
 
     /**
@@ -48,14 +56,14 @@ public class Controleur {
         if (
                 caseX + typeDeplacement.getX() >= 0 && caseX + typeDeplacement.getX() < Main.TAILLE_X &&
                         caseY + typeDeplacement.getY() >= 0 && caseY + typeDeplacement.getY() < Main.TAILLE_Y &&
-                        Terrain.getInstance().getCaseViaPosition(caseX + typeDeplacement.getX(), caseY + typeDeplacement.getY()) != null &&
-                        Terrain.getInstance().getCaseViaPosition(caseX + typeDeplacement.getX(), caseY + typeDeplacement.getY()).getStatusCase() != StatusCase.MUR
+                        this.terrain.getCaseViaPosition(caseX + typeDeplacement.getX(), caseY + typeDeplacement.getY()) != null &&
+                        this.terrain.getCaseViaPosition(caseX + typeDeplacement.getX(), caseY + typeDeplacement.getY()).getStatusCase() != StatusCase.MUR
         ) {
             dessinPerssonage.calculPosition(typeDeplacement.getX(), typeDeplacement.getY());
-            perssonage.setCaseActuel(Terrain.getInstance().getCaseViaPosition(caseX + typeDeplacement.getX(), caseY + typeDeplacement.getY()));
+            perssonage.setCaseActuel(this.terrain.getCaseViaPosition(caseX + typeDeplacement.getX(), caseY + typeDeplacement.getY()));
 
             if (this.checkPerdue()) {
-                Terrain.getInstance().getIntrus().setStatusIntru(StatusIntru.PERDU);
+                this.terrain.getIntrus().setStatusIntru(StatusIntru.PERDU);
                 mainView.getScene().setOnKeyPressed(null);
                 System.out.println("Perdu");
                 mainView.getLittleCycle().stop();
@@ -94,13 +102,13 @@ public class Controleur {
         for (int i = x - Main.DISTANCE_VUE_ROBOT; i < x + Main.DISTANCE_VUE_ROBOT; i++) {
             for (int j = y - Main.DISTANCE_VUE_ROBOT; j < y + Main.DISTANCE_VUE_ROBOT; j++) {
                 if (Math.pow((i - x), 2) + Math.pow((j - y), 2) <= Math.pow(Main.DISTANCE_VUE_ROBOT, 2)) {
-                    Case caseTerain = Terrain.getInstance().getCaseViaPosition(i, j);
+                    Case caseTerain = this.terrain.getCaseViaPosition(i, j);
                     if (caseTerain != null) {
-                        Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Joueur détécter => Robot:" + perssonage + "; joueur:" + Terrain.getInstance().getIntrus().toString());
-                        if (caseTerain == Terrain.getInstance().getIntrus().getCaseActuel()) {
+                        Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Joueur détécter => Robot:" + perssonage + "; joueur:" + this.terrain.getIntrus().toString());
+                        if (caseTerain == this.terrain.getIntrus().getCaseActuel()) {
                             Robot.setCaseIntru(caseTerain);
                             Robot.setNbTickDeRecherche(Main.NB_TICKE_RECHECHERCHE);
-                            Terrain.getInstance().getRobots().forEach(robot -> robot.setStatusRobo(StatusRobo.CHASSE));
+                            this.terrain.getRobots().forEach(robot -> robot.setStatusRobo(StatusRobo.CHASSE));
                         }
                     }
                 }
@@ -115,12 +123,12 @@ public class Controleur {
      */
     private boolean checkPerdue() {
         Logger.getInstance().ajouteUneLigne(TypeLog.DEBUG, "Vérifier que le joueur ne c'est pas fait attraper");
-        Case caseIntrus = Terrain.getInstance().getIntrus().getCaseActuel();
+        Case caseIntrus = this.terrain.getIntrus().getCaseActuel();
         final boolean[] res = {false};
-        Terrain.getInstance().getRobots().forEach(robot -> {
+        this.terrain.getRobots().forEach(robot -> {
             if (robot.getCaseActuel() == caseIntrus) {
                 res[0] = true;
-                Logger.getInstance().ajouteUneLigne(TypeLog.DEBUG, "Le joueur vien d'être attraper => robot:" + robot.toString() + "; joueur :" + Terrain.getInstance().getIntrus().toString());
+                Logger.getInstance().ajouteUneLigne(TypeLog.DEBUG, "Le joueur vien d'être attraper => robot:" + robot.toString() + "; joueur :" + this.terrain.getIntrus().toString());
             }
         });
         return res[0];
@@ -140,7 +148,7 @@ public class Controleur {
         for (int i = x - Main.DISTANCE_VUE; i < x + Main.DISTANCE_VUE; i++) {
             for (int j = y - Main.DISTANCE_VUE; j < y + Main.DISTANCE_VUE; j++) {
                 if (Math.pow((i - x), 2) + Math.pow((j - y), 2) <= Math.pow(Main.DISTANCE_VUE, 2)) {
-                    Case caseTerain = Terrain.getInstance().getCaseViaPosition(i, j);
+                    Case caseTerain = this.terrain.getCaseViaPosition(i, j);
                     if (caseTerain != null) {
                         Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Met a jour une case visible => case:" + caseTerain + "; perssonage:" + perssonage);
                         caseTerain.setDecouvert(true);
@@ -155,7 +163,7 @@ public class Controleur {
         for (int i = x - Main.DISTANCE_VUE_MESSAGE; i < x + Main.DISTANCE_VUE_MESSAGE; i++) {
             for (int j = y - Main.DISTANCE_VUE_MESSAGE; j < y + Main.DISTANCE_VUE_MESSAGE; j++) {
                 if (Math.pow((i - x), 2) + Math.pow((j - y), 2) <= Math.pow(Main.DISTANCE_VUE_MESSAGE, 2)) {
-                    Case caseTerain = Terrain.getInstance().getCaseViaPosition(i, j);
+                    Case caseTerain = this.terrain.getCaseViaPosition(i, j);
                     if (caseTerain != null) {
                         Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Met a jour une case visible des message => case:" + caseTerain + "; perssonage:" + perssonage);
                         caseTerain.setLue(true);
@@ -176,11 +184,11 @@ public class Controleur {
      */
     public void PrendMsg(MainView mainView, DessinIntrus dessinIntrus) {
         Logger.getInstance().ajouteUneLigne(TypeLog.DEBUG, "Tente de récupérer le message");
-        if (Terrain.getInstance().getIntrus().getCaseActuel().getStatusCase() == StatusCase.MESSAGE) {
-            Logger.getInstance().ajouteUneLigne(TypeLog.DEBUG, "Récupérer le message => joueur:" + Terrain.getInstance().getIntrus().toString());
+        if (this.terrain.getIntrus().getCaseActuel().getStatusCase() == StatusCase.MESSAGE) {
+            Logger.getInstance().ajouteUneLigne(TypeLog.DEBUG, "Récupérer le message => joueur:" + this.terrain.getIntrus().toString());
             mainView.getScene().setFill(Color.DARKGREEN);
             dessinIntrus.setFill(DessinIntrus.couleurIntrusMessage);
-            Terrain.getInstance().getIntrus().setStatusIntru(StatusIntru.FUITE);
+            this.terrain.getIntrus().setStatusIntru(StatusIntru.FUITE);
         }
     }
 
@@ -196,31 +204,31 @@ public class Controleur {
         if (Robot.getNbTickDeRecherche() > 0) {
             if (Robot.getCaseIntru() != null) {
                 if (robot.getCaseActuel().getX() > Robot.getCaseIntru().getX()) {
-                    if (Terrain.getInstance().getCaseViaPosition(robot.getCaseActuel().getX() + TypeDeplacement.GAUCHE.getX(), robot.getCaseActuel().getY() + TypeDeplacement.GAUCHE.getY()).getStatusCase() != StatusCase.MUR) {
+                    if (this.terrain.getCaseViaPosition(robot.getCaseActuel().getX() + TypeDeplacement.GAUCHE.getX(), robot.getCaseActuel().getY() + TypeDeplacement.GAUCHE.getY()).getStatusCase() != StatusCase.MUR) {
                         res = TypeDeplacement.GAUCHE;
                     }
                 } else if (robot.getCaseActuel().getX() < Robot.getCaseIntru().getX()) {
-                    if (Terrain.getInstance().getCaseViaPosition(robot.getCaseActuel().getX() + TypeDeplacement.DROITE.getX(), robot.getCaseActuel().getY() + TypeDeplacement.DROITE.getY()).getStatusCase() != StatusCase.MUR) {
+                    if (this.terrain.getCaseViaPosition(robot.getCaseActuel().getX() + TypeDeplacement.DROITE.getX(), robot.getCaseActuel().getY() + TypeDeplacement.DROITE.getY()).getStatusCase() != StatusCase.MUR) {
                         res = TypeDeplacement.DROITE;
                     }
                 } else if (robot.getCaseActuel().getY() > Robot.getCaseIntru().getY()) {
-                    if (Terrain.getInstance().getCaseViaPosition(robot.getCaseActuel().getX() + TypeDeplacement.HAUT.getX(), robot.getCaseActuel().getY() + TypeDeplacement.HAUT.getY()).getStatusCase() != StatusCase.MUR) {
+                    if (this.terrain.getCaseViaPosition(robot.getCaseActuel().getX() + TypeDeplacement.HAUT.getX(), robot.getCaseActuel().getY() + TypeDeplacement.HAUT.getY()).getStatusCase() != StatusCase.MUR) {
                         res = TypeDeplacement.HAUT;
                     }
                 } else if (robot.getCaseActuel().getY() < Robot.getCaseIntru().getY()) {
-                    if (Terrain.getInstance().getCaseViaPosition(robot.getCaseActuel().getX() + TypeDeplacement.BAS.getX(), robot.getCaseActuel().getY() + TypeDeplacement.BAS.getY()).getStatusCase() != StatusCase.MUR) {
+                    if (this.terrain.getCaseViaPosition(robot.getCaseActuel().getX() + TypeDeplacement.BAS.getX(), robot.getCaseActuel().getY() + TypeDeplacement.BAS.getY()).getStatusCase() != StatusCase.MUR) {
                         res = TypeDeplacement.BAS;
                     }
                 } else {
                     Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Reinitialise la recherche des robot");
                     Robot.setCaseIntru(null);
-                    Terrain.getInstance().getRobots().forEach(robot1 -> robot1.setStatusRobo(StatusRobo.PATROUILLE));
+                    this.terrain.getRobots().forEach(robot1 -> robot1.setStatusRobo(StatusRobo.PATROUILLE));
                 }
             }
         } else if (Robot.getCaseIntru() != null) {
             Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Reinitialise la recherche des robot");
             Robot.setCaseIntru(null);
-            Terrain.getInstance().getRobots().forEach(robot1 -> robot1.setStatusRobo(StatusRobo.PATROUILLE));
+            this.terrain.getRobots().forEach(robot1 -> robot1.setStatusRobo(StatusRobo.PATROUILLE));
         }
         return res;
     }

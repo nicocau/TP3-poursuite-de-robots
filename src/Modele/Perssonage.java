@@ -33,12 +33,4 @@ public abstract class Perssonage {
     public void setCaseActuel(Case caseActuel) {
         this.caseActuel = caseActuel;
     }
-
-    /**
-     * retourne un descriptif de l'objet
-     *
-     * @return descriptif de l'objet
-     */
-    @Override
-    public abstract String toString();
 }

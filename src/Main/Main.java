@@ -1,5 +1,6 @@
 package Main;
 
+import Controleur.Controleur;
 import Log.Logger;
 import Log.TypeLog;
 import Vue.MainView;
@@ -23,6 +24,7 @@ public class Main {
      */
     public static void main(String[] args) {
         Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Lance le jeux");
-        MainView.getInstance().lancement(args);
+//        Controleur controleur = new Controleur(args);
+
     }
 }
