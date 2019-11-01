@@ -10,10 +10,25 @@ import java.util.Random;
 
 public class Terrain {
 
+    /**
+     * Liste toutes les cases
+     */
     private ArrayList<Case> cases = new ArrayList<Case>();
+    /**
+     * Liste les case encore vide
+     */
     private ArrayList<Case> casesVide = new ArrayList<Case>();
+    /**
+     * Liste des rbots
+     */
     private ArrayList<Robot> robots = new ArrayList<Robot>();
+    /**
+     * Liste de tous les murs
+     */
     private ArrayList<Case> murs = new ArrayList<Case>();
+    /**
+     * Intrus
+     */
     private Intrus intrus;
 
     /**

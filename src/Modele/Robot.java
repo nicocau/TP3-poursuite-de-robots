@@ -4,8 +4,17 @@ import Log.Logger;
 import Log.TypeLog;
 
 public class Robot extends Perssonage {
+    /**
+     * case sur la quelle l'intru a été repérer
+     */
     private static volatile Case caseIntru;
+    /**
+     * nobre de tick depuis la dispariton du joueur
+     */
     private static volatile int nbTickDeRecherche = 0;
+    /**
+     * Le statut du robot (patroulle, chase)
+     */
     private StatusRobo statusRobo = StatusRobo.PATROUILLE;
 
     /**

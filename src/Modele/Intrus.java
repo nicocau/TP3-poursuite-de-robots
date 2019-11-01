@@ -4,6 +4,9 @@ import Log.Logger;
 import Log.TypeLog;
 
 public class Intrus extends Perssonage {
+    /**
+     * status de l'intrus (en recherche, gagner, ...)
+     */
     private StatusIntru statusIntru = StatusIntru.RECHERCHE;
 
     /**

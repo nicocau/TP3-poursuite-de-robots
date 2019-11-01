@@ -7,10 +7,25 @@ import Log.TypeLog;
  *
  */
 public class Case {
+    /**
+     * possition x
+     */
     private int x;
+    /**
+     * possiton y
+     */
     private int y;
+    /**
+     * Le statut de la casse (mur, vide, message, ...)
+     */
     private StatusCase statusCase = StatusCase.VIDE;
+    /**
+     * permet de savoir si la casse a été découvert
+     */
     private boolean decouvert = false;
+    /**
+     * permet de savoir si le casse a été lue
+     */
     private boolean lue = false;
 
     /**
@@ -79,10 +94,20 @@ public class Case {
         this.lue = lue;
     }
 
+    /**
+     * Permet de savoir si la casse a été découvert
+     *
+     * @return
+     */
     public boolean isDecouvert() {
         return decouvert;
     }
 
+    /**
+     * Permet de savoir si la casse a été lue
+     *
+     * @return
+     */
     public boolean isLue() {
         return lue;
     }

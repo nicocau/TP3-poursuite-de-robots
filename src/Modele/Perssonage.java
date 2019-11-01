@@ -4,6 +4,9 @@ import Log.Logger;
 import Log.TypeLog;
 
 public abstract class Perssonage {
+    /**
+     * Permet de récupérer la casse sur la quelle se trouvre l'utilisateur
+     */
     protected Case caseActuel;
 
     /**
