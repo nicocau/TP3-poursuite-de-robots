@@ -1,4 +1,4 @@
-package Main;
+package main;
 
 /**
  * Class contenant les valeur par défaut

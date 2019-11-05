@@ -1,7 +1,7 @@
-package Controleur;
+package controleur;
 
-import Main.Main;
-import Modele.Niveau;
+import main.Main;
+import modele.Niveau;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;

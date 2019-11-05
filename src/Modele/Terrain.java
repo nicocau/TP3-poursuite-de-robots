@@ -1,8 +1,8 @@
-package Modele;
+package modele;
 
-import Log.Logger;
-import Log.TypeLog;
-import Main.Main;
+import log.Logger;
+import log.TypeLog;
+import main.Main;
 
 import java.util.ArrayList;
 import java.util.Random;

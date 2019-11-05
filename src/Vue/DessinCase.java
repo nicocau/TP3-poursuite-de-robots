@@ -1,7 +1,7 @@
-package Vue;
+package vue;
 
-import Main.Main;
-import Modele.StatusCase;
+import main.Main;
+import modele.StatusCase;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 

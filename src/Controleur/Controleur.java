@@ -1,13 +1,13 @@
-package Controleur;
+package controleur;
 
-import Log.Logger;
-import Log.TypeLog;
-import Main.Main;
-import Modele.*;
-import Vue.DessinCase;
-import Vue.DessinIntrus;
-import Vue.DessinPerssonage;
-import Vue.MainView;
+import log.Logger;
+import log.TypeLog;
+import main.Main;
+import modele.*;
+import vue.DessinCase;
+import vue.DessinIntrus;
+import vue.DessinPerssonage;
+import vue.MainView;
 import javafx.scene.paint.Color;
 
 
@@ -45,72 +45,72 @@ public class Controleur {
     }
 
     /**
-     * Gere le déplacement des perssonage
+     * Gere le déplacement des personage
      *
      * @param typeDeplacement
-     * @param perssonage
+     * @param personage
      * @param dessinPerssonage
      * @param mainView
      */
-    public void Deplacement(TypeDeplacement typeDeplacement, Perssonage perssonage, DessinPerssonage dessinPerssonage, MainView mainView) {
-        int caseX = perssonage.getCaseActuel().getX();
-        int caseY = perssonage.getCaseActuel().getY();
-        Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Deplacement => perssonage: " + perssonage.toString() + "; typeDeplacement: " + typeDeplacement);
+    public void Deplacement(TypeDeplacement typeDeplacement, Personage personage, DessinPerssonage dessinPerssonage, MainView mainView) {
+        int caseX = personage.getCaseActuel().getX();
+        int caseY = personage.getCaseActuel().getY();
+        Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Deplacement => personage: " + personage.toString() + "; typeDeplacement: " + typeDeplacement);
         if (
                 caseX + typeDeplacement.getX() >= 0 && caseX + typeDeplacement.getX() < Main.TAILLE_X &&
                         caseY + typeDeplacement.getY() >= 0 && caseY + typeDeplacement.getY() < Main.TAILLE_Y &&
                         this.terrain.getCaseViaPosition(caseX + typeDeplacement.getX(), caseY + typeDeplacement.getY()) != null &&
                         this.terrain.getCaseViaPosition(caseX + typeDeplacement.getX(), caseY + typeDeplacement.getY()).getStatusCase() != StatusCase.MUR
         ) {
-            dessinPerssonage.calculPosition(typeDeplacement.getX(), typeDeplacement.getY(), this);
-            perssonage.setCaseActuel(this.terrain.getCaseViaPosition(caseX + typeDeplacement.getX(), caseY + typeDeplacement.getY()));
+            dessinPerssonage.calculPosition(typeDeplacement.getX(), typeDeplacement.getY(), this, mainView);
+            personage.setCaseActuel(this.terrain.getCaseViaPosition(caseX + typeDeplacement.getX(), caseY + typeDeplacement.getY()));
 
             if (this.checkPerdue()) {
                 this.terrain.getIntrus().setStatusIntru(StatusIntru.PERDU);
                 mainView.getScene().setOnKeyPressed(null);
                 System.out.println("Perdu");
                 mainView.getLittleCycle().stop();
-                Logger.getInstance().ajouteUneLigne(TypeLog.DEBUG, "Deplacement piegeur => perssonage: " + perssonage.toString() + "; typeDeplacement: " + typeDeplacement);
+                Logger.getInstance().ajouteUneLigne(TypeLog.DEBUG, "Deplacement piegeur => personage: " + personage.toString() + "; typeDeplacement: " + typeDeplacement);
                 Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Le Joueur vien de perdre");
-            } else if (perssonage instanceof Intrus) {
-                if (perssonage.getCaseActuel().getStatusCase() == StatusCase.SORTIE && ((Intrus) perssonage).getStatusIntru() == StatusIntru.FUITE) {
-                    ((Intrus) perssonage).setStatusIntru(StatusIntru.GAGNER);
+            } else if (personage instanceof Intrus) {
+                if (personage.getCaseActuel().getStatusCase() == StatusCase.SORTIE && ((Intrus) personage).getStatusIntru() == StatusIntru.FUITE) {
+                    ((Intrus) personage).setStatusIntru(StatusIntru.GAGNER);
                     mainView.getScene().setOnKeyPressed(null);
                     mainView.getLittleCycle().stop();
                     System.out.println("Gagner");
-                    Logger.getInstance().ajouteUneLigne(TypeLog.DEBUG, "Deplacement de la victoire => perssonage: " + perssonage.toString() + "; typeDeplacement: " + typeDeplacement);
+                    Logger.getInstance().ajouteUneLigne(TypeLog.DEBUG, "Deplacement de la victoire => personage: " + personage.toString() + "; typeDeplacement: " + typeDeplacement);
                     Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Le Joueur vien de gagner");
                 }
 
-                this.updateCelluleVisible((Intrus) perssonage, mainView);
+                this.updateCelluleVisible((Intrus) personage, mainView);
             }
 
-            if (perssonage instanceof Robot) {
-                this.recherJoueur((Robot) perssonage);
+            if (personage instanceof Robot) {
+                this.recherJoueur((Robot) personage);
             }
         } else {
-            if (perssonage instanceof Intrus){
+            if (personage instanceof Intrus){
                 this.getTerrain().getIntrus().setEnDeplacement(false);
             }
-            Logger.getInstance().ajouteUneLigne(TypeLog.WARN, "Deplacement Imposible => perssonage: " + perssonage.toString() + "; typeDeplacement: " + typeDeplacement);
+            Logger.getInstance().ajouteUneLigne(TypeLog.WARN, "Deplacement Imposible => personage: " + personage.toString() + "; typeDeplacement: " + typeDeplacement);
         }
     }
 
     /**
      * Recher le joueur par le robot
      *
-     * @param perssonage
+     * @param personage
      */
-    private void recherJoueur(Robot perssonage) {
-        Logger.getInstance().ajouteUneLigne(TypeLog.DEBUG, "Recherche Joueur => Robot" + perssonage);
-        int x = perssonage.getCaseActuel().getX();
-        int y = perssonage.getCaseActuel().getY();
+    private void recherJoueur(Robot personage) {
+        Logger.getInstance().ajouteUneLigne(TypeLog.DEBUG, "Recherche Joueur => Robot" + personage);
+        int x = personage.getCaseActuel().getX();
+        int y = personage.getCaseActuel().getY();
         for (int i = x - Main.DISTANCE_VUE_ROBOT; i < x + Main.DISTANCE_VUE_ROBOT; i++) {
             for (int j = y - Main.DISTANCE_VUE_ROBOT; j < y + Main.DISTANCE_VUE_ROBOT; j++) {
                 if (Math.pow((i - x), 2) + Math.pow((j - y), 2) <= Math.pow(Main.DISTANCE_VUE_ROBOT, 2)) {
                     Case caseTerain = this.terrain.getCaseViaPosition(i, j);
                     if (caseTerain != null) {
-                        Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Joueur détécter => Robot:" + perssonage + "; joueur:" + this.terrain.getIntrus().toString());
+                        Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Joueur détécter => Robot:" + personage + "; joueur:" + this.terrain.getIntrus().toString());
                         if (caseTerain == this.terrain.getIntrus().getCaseActuel()) {
                             Robot.setCaseIntru(caseTerain);
                             Robot.setNbTickDeRecherche(Main.NB_TICKE_RECHECHERCHE);

@@ -1,7 +1,7 @@
-package Modele;
+package modele;
 
-import Log.Logger;
-import Log.TypeLog;
+import log.Logger;
+import log.TypeLog;
 
 /**
  *
@@ -22,7 +22,7 @@ public class Case {
     /**
      * permet de savoir si la casse a été découvert
      */
-    private boolean decouvert = false;
+    private boolean decouvert = true;
     /**
      * permet de savoir si le casse a été lue
      */

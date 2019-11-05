@@ -1,4 +1,4 @@
-package Log;
+package log;
 
 public enum TypeLog {
     DEBUG("DEBUG "),

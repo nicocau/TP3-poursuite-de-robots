@@ -1,4 +1,4 @@
-package Controleur;
+package controleur;
 
 public enum TypeDeplacement {
     HAUT(0, -1),

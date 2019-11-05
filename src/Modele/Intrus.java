@@ -1,9 +1,9 @@
-package Modele;
+package modele;
 
-import Log.Logger;
-import Log.TypeLog;
+import log.Logger;
+import log.TypeLog;
 
-public class Intrus extends Perssonage {
+public class Intrus extends Personage {
     /**
      * status de l'intrus (en recherche, gagner, ...)
      */

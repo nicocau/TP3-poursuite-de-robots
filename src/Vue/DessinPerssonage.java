@@ -1,13 +1,14 @@
-package Vue;
+package vue;
 
-import Controleur.Controleur;
-import Main.Main;
+import controleur.Controleur;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
+import main.Main;
 
 public abstract class DessinPerssonage extends Circle {
     /**
@@ -43,7 +44,7 @@ public abstract class DessinPerssonage extends Circle {
      * @param color
      */
     public DessinPerssonage(int posX, int posY, Color color) {
-        super((posX * Main.tailleCase + Main.tailleCase + Main.tailleCase / 2), (posY * Main.tailleCase + Main.tailleCase + Main.tailleCase / 2), Main.tailleCase / 1.5);
+        super((posX * Main.tailleCase + Main.tailleCase + Main.tailleCase), (posY * Main.tailleCase + Main.tailleCase + Main.tailleCase / 2), Main.tailleCase / 1.5);
         this.posX = posX;
         this.posY = posY;
         this.setFill(color);
@@ -56,7 +57,7 @@ public abstract class DessinPerssonage extends Circle {
      * @param y
      * @param controleur
      */
-    public void calculPosition(int x, int y, Controleur controleur) {
+    public void calculPosition(int x, int y, Controleur controleur, MainView mainView) {
         this.posX += x;
         this.posY += y;
         DessinPerssonage dessinPerssonage = this;
@@ -69,11 +70,16 @@ public abstract class DessinPerssonage extends Circle {
                 }),
                 new KeyValue(this.centerXProperty(), posX * Main.tailleCase + Main.tailleCase + Main.tailleCase / 2),
                 new KeyValue(this.centerYProperty(), posY * Main.tailleCase + Main.tailleCase + Main.tailleCase / 2)
-                );
+        );
         timeline.getKeyFrames().add(bouge);
         timeline.play();
         this.setCenterX(posX * Main.tailleCase + Main.tailleCase + Main.tailleCase / 2);
         this.setCenterY(posY * Main.tailleCase + Main.tailleCase + Main.tailleCase / 2);
         this.toFront();
+        if (this instanceof DessinIntrus) {
+            GraphicsContext graphicsContext = mainView.getCanvas().getGraphicsContext2D();
+            graphicsContext.setFill(Color.BLACK);
+            graphicsContext.fillOval((posX - 3) * Main.tailleCase, (posY-3) * Main.tailleCase, Main.tailleCase * Main.DISTANCE_VUE * 2, Main.tailleCase * Main.DISTANCE_VUE * 2);
+        }
     }
 }

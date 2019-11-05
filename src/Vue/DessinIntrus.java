@@ -1,4 +1,4 @@
-package Vue;
+package vue;
 
 public class DessinIntrus extends DessinPerssonage {
     /**

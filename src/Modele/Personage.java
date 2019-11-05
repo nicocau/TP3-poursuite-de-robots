@@ -1,9 +1,9 @@
-package Modele;
+package modele;
 
-import Log.Logger;
-import Log.TypeLog;
+import log.Logger;
+import log.TypeLog;
 
-public abstract class Perssonage {
+public abstract class Personage {
     /**
      * Permet de récupérer la casse sur la quelle se trouvre l'utilisateur
      */
@@ -14,7 +14,7 @@ public abstract class Perssonage {
      *
      * @param caseActuel
      */
-    public Perssonage(Case caseActuel) {
+    public Personage(Case caseActuel) {
         this.caseActuel = caseActuel;
         Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Crée un perssonage => perssonage: " + this.toString());
     }

@@ -1,9 +1,9 @@
-package Modele;
+package modele;
 
-import Log.Logger;
-import Log.TypeLog;
+import log.Logger;
+import log.TypeLog;
 
-public class Robot extends Perssonage {
+public class Robot extends Personage {
     /**
      * case sur la quelle l'intru a été repérer
      */

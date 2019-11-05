@@ -1,32 +1,37 @@
-package Vue;
+package vue;
 
-import Controleur.Controleur;
-import Controleur.MenuControleur;
-import Controleur.TypeDeplacement;
-import Log.Logger;
-import Log.TypeLog;
-import Main.Main;
-import Modele.Case;
-import Modele.Robot;
-import Modele.StatusRobo;
-import Modele.Terrain;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import controleur.Controleur;
+import controleur.MenuControleur;
+import controleur.TypeDeplacement;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.effect.BlendMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.StrokeLineCap;
+import javafx.scene.shape.StrokeLineJoin;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import log.Logger;
+import log.TypeLog;
+import main.Main;
+import modele.Case;
+import modele.Robot;
+import modele.StatusRobo;
+import modele.Terrain;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -115,6 +120,12 @@ public class MainView extends Application {
         return littleCycle;
     }
 
+    private Canvas canvas;
+
+    public Canvas getCanvas() {
+        return canvas;
+    }
+
     /**
      * methode initialisant la vue
      *
@@ -142,7 +153,7 @@ public class MainView extends Application {
     private void ouvreMenu(Stage primaryStage) {
 
         //chargement du fichier FXML
-        String sceneFile = "/VueFXML/menu.fxml";
+        String sceneFile = "/vuefxml/menu.fxml";
         AnchorPane page = null;
         FXMLLoader fxmlLoader =null;
         try
@@ -161,7 +172,6 @@ public class MainView extends Application {
             dialogStage.initOwner(primaryStage);
             Scene miniScene = new Scene(page);
             dialogStage.setScene(miniScene);
-            MenuControleur controller = fxmlLoader.getController();
             dialogStage.showAndWait();
         }
 
@@ -202,6 +212,17 @@ public class MainView extends Application {
         this.dessinEnvironnement();
         this.scene = new Scene(root, width + 10, height + 30, Color.ANTIQUEWHITE);
         this.scene.setFill(Color.DARKGRAY);
+
+//        Canevas
+        this.canvas = new Canvas((Main.TAILLE_X + 1) * Main.tailleCase, (Main.TAILLE_Y + 1) * Main.tailleCase);
+        this.canvas.setBlendMode(BlendMode.SCREEN);
+        GraphicsContext graphicsContext = this.canvas.getGraphicsContext2D();
+        graphicsContext.setFill(Color.WHITE);
+        graphicsContext.fillRect(Main.tailleCase, Main.tailleCase, canvas.getWidth(), canvas.getHeight());
+        graphicsContext.setLineCap(StrokeLineCap.ROUND);
+        graphicsContext.setLineJoin(StrokeLineJoin.ROUND);
+        this.troupe.getChildren().add(this.canvas);
+
 
         Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Crée les touche");
         this.ajouteLesComande(scene, this);
