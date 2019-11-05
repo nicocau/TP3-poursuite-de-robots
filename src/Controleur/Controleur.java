@@ -62,7 +62,7 @@ public class Controleur {
                         this.terrain.getCaseViaPosition(caseX + typeDeplacement.getX(), caseY + typeDeplacement.getY()) != null &&
                         this.terrain.getCaseViaPosition(caseX + typeDeplacement.getX(), caseY + typeDeplacement.getY()).getStatusCase() != StatusCase.MUR
         ) {
-            dessinPerssonage.calculPosition(typeDeplacement.getX(), typeDeplacement.getY());
+            dessinPerssonage.calculPosition(typeDeplacement.getX(), typeDeplacement.getY(), this);
             perssonage.setCaseActuel(this.terrain.getCaseViaPosition(caseX + typeDeplacement.getX(), caseY + typeDeplacement.getY()));
 
             if (this.checkPerdue()) {
@@ -89,6 +89,9 @@ public class Controleur {
                 this.recherJoueur((Robot) perssonage);
             }
         } else {
+            if (perssonage instanceof Intrus){
+                this.getTerrain().getIntrus().setEnDeplacement(false);
+            }
             Logger.getInstance().ajouteUneLigne(TypeLog.WARN, "Deplacement Imposible => perssonage: " + perssonage.toString() + "; typeDeplacement: " + typeDeplacement);
         }
     }

@@ -1,5 +1,6 @@
 package Vue;
 
+import Controleur.Controleur;
 import Main.Main;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -51,17 +52,24 @@ public abstract class DessinPerssonage extends Circle {
 
     /**
      * calcul et déplace le perssonage
-     *
-     * @param x
+     *  @param x
      * @param y
+     * @param controleur
      */
-    public void calculPosition(int x, int y) {
+    public void calculPosition(int x, int y, Controleur controleur) {
         this.posX += x;
         this.posY += y;
+        DessinPerssonage dessinPerssonage = this;
         Timeline timeline = new Timeline();
-        KeyFrame bouge = new KeyFrame(new Duration((this instanceof DessinIntrus) ? Main.tempo / 5 : Main.tempo / 2),
+        KeyFrame bouge = new KeyFrame(new Duration(Main.tempo),
+                (ActionEvent -> {
+                    if (dessinPerssonage instanceof DessinIntrus){
+                        controleur.getTerrain().getIntrus().setEnDeplacement(false);
+                    }
+                }),
                 new KeyValue(this.centerXProperty(), posX * Main.tailleCase + Main.tailleCase + Main.tailleCase / 2),
-                new KeyValue(this.centerYProperty(), posY * Main.tailleCase + Main.tailleCase + Main.tailleCase / 2));
+                new KeyValue(this.centerYProperty(), posY * Main.tailleCase + Main.tailleCase + Main.tailleCase / 2)
+                );
         timeline.getKeyFrames().add(bouge);
         timeline.play();
         this.setCenterX(posX * Main.tailleCase + Main.tailleCase + Main.tailleCase / 2);

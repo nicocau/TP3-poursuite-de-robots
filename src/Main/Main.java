@@ -17,11 +17,11 @@ public class Main {
      */
     public static volatile Integer NB_ROBOTS = 3;
     /**
-     * Distance a la quelle le perssonage peut voir les caisse
+     * Distance a la quelle le Personnage peut voir les caisse
      */
     public static volatile Integer DISTANCE_VUE = 4;
     /**
-     * Distance a la quelle le perssonage peut detecter que la caisse contien le message rechercher
+     * Distance a la quelle le Personnage peut detecter que la caisse contien le message rechercher
      */
     public static volatile Integer DISTANCE_VUE_MESSAGE = 2;
     /**

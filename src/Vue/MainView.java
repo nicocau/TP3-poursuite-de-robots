@@ -226,31 +226,36 @@ public class MainView extends Application {
      */
     private void ajouteLesComande(Scene scene, MainView mainView) {
         scene.setOnKeyPressed(keyEvent -> {
+            if (!mainView.controleur.getTerrain().getIntrus().isEnDeplacement()) {
+                mainView.controleur.getTerrain().getIntrus().setEnDeplacement(true);
+                switch (keyEvent.getCode()) {
+                    case UP:
+                    case Z:
+                        Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Déplace le joueur en haut");
+                        mainView.controleur.Deplacement(TypeDeplacement.HAUT, mainView.controleur.getTerrain().getIntrus(), mainView.getDessinIntru(), mainView);
+                        break;
+                    case DOWN:
+                    case S:
+                        Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Déplace le joueur en bas");
+                        mainView.controleur.Deplacement(TypeDeplacement.BAS, mainView.controleur.getTerrain().getIntrus(), mainView.getDessinIntru(), mainView);
+                        break;
+                    case LEFT:
+                    case Q:
+                        Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Déplace le joueur a gauche");
+                        mainView.controleur.Deplacement(TypeDeplacement.GAUCHE, mainView.controleur.getTerrain().getIntrus(), mainView.getDessinIntru(), mainView);
+                        break;
+                    case RIGHT:
+                    case D:
+                        Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Déplace le joueur a droit");
+                        mainView.controleur.Deplacement(TypeDeplacement.DROITE, mainView.controleur.getTerrain().getIntrus(), mainView.getDessinIntru(), mainView);
+                        break;
+                    case SPACE:
+                        Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Clique sur espace");
+                        mainView.controleur.PrendMsg(mainView, mainView.dessinIntru);
+                        break;
+                }
+            }
             switch (keyEvent.getCode()) {
-                case UP:
-                case Z:
-                    Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Déplace le joueur en haut");
-                    mainView.controleur.Deplacement(TypeDeplacement.HAUT, mainView.controleur.getTerrain().getIntrus(), mainView.getDessinIntru(), mainView);
-                    break;
-                case DOWN:
-                case S:
-                    Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Déplace le joueur en bas");
-                    mainView.controleur.Deplacement(TypeDeplacement.BAS, mainView.controleur.getTerrain().getIntrus(), mainView.getDessinIntru(), mainView);
-                    break;
-                case LEFT:
-                case Q:
-                    Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Déplace le joueur a gauche");
-                    mainView.controleur.Deplacement(TypeDeplacement.GAUCHE, mainView.controleur.getTerrain().getIntrus(), mainView.getDessinIntru(), mainView);
-                    break;
-                case RIGHT:
-                case D:
-                    Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Déplace le joueur a droit");
-                    mainView.controleur.Deplacement(TypeDeplacement.DROITE, mainView.controleur.getTerrain().getIntrus(), mainView.getDessinIntru(), mainView);
-                    break;
-                case SPACE:
-                    Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Clique sur espace");
-                    mainView.controleur.PrendMsg(mainView, mainView.dessinIntru);
-                    break;
                 case M:
                     mainView.sauvegarde();
                     break;

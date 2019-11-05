@@ -10,6 +10,11 @@ public class Intrus extends Perssonage {
     private StatusIntru statusIntru = StatusIntru.RECHERCHE;
 
     /**
+     * Permet de savoir si  la perssone est deja en déplacement
+     */
+    private boolean enDeplacement = false;
+
+    /**
      * Constructeur par défaut
      *
      * @param caseActuel
@@ -17,6 +22,22 @@ public class Intrus extends Perssonage {
     public Intrus(Case caseActuel) {
         super(caseActuel);
         Logger.getInstance().ajouteUneLigne(TypeLog.INFO, "Crée un intrus => intrus: " + this.toString());
+    }
+
+    /**
+     * Permet de savoir si  la perssone est deja en déplacement
+     * @return
+     */
+    public boolean isEnDeplacement() {
+        return enDeplacement;
+    }
+
+    /**
+     * Permet de modifier le statut de déplacement du perssonage
+     * @param enDeplacement
+     */
+    public void setEnDeplacement(boolean enDeplacement) {
+        this.enDeplacement = enDeplacement;
     }
 
     /**
