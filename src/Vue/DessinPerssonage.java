@@ -30,11 +30,11 @@ public abstract class DessinPerssonage extends Circle {
     /**
      * Possition du perssonage en x
      */
-    private int posX;
+    protected int posX;
     /**
      * Possition du perssonage en y
      */
-    private int posY;
+    protected int posY;
 
     /**
      * constructeur par defaut
@@ -76,10 +76,5 @@ public abstract class DessinPerssonage extends Circle {
         this.setCenterX(posX * Main.tailleCase + Main.tailleCase + Main.tailleCase / 2);
         this.setCenterY(posY * Main.tailleCase + Main.tailleCase + Main.tailleCase / 2);
         this.toFront();
-        if (this instanceof DessinIntrus) {
-            GraphicsContext graphicsContext = mainView.getCanvas().getGraphicsContext2D();
-            graphicsContext.setFill(Color.BLACK);
-            graphicsContext.fillOval((posX - 3) * Main.tailleCase, (posY-3) * Main.tailleCase, Main.tailleCase * Main.DISTANCE_VUE * 2, Main.tailleCase * Main.DISTANCE_VUE * 2);
-        }
     }
 }
