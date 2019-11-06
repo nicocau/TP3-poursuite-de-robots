@@ -137,6 +137,7 @@ public class MainView extends Application {
         if (Files.exists(Paths.get(SRC_SAVE + "main.json")) && Files.exists(Paths.get(SRC_SAVE + "terrain.json"))) {
             this.controleur = new Controleur(this);
             this.chargeSauvegarde();
+            this.controleur.getTerrain().getIntrus().setEnDeplacement(false);
         } else {
             this.ouvreMenu(primaryStage);
             this.controleur = new Controleur(this);
