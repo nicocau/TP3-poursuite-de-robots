@@ -85,6 +85,11 @@ public class MainView extends Application {
     private Timeline littleCycle;
 
     /**
+     * Canvas qui permet de gérer le broullard
+     */
+    private Canvas canvas;
+
+    /**
      * Permet de récuperer le dessin de l'intru
      *
      * @return
@@ -120,8 +125,11 @@ public class MainView extends Application {
         return littleCycle;
     }
 
-    private Canvas canvas;
-
+    /**
+     * Retourne le canvas pour le broullard
+     *
+     * @return
+     */
     public Canvas getCanvas() {
         return canvas;
     }
