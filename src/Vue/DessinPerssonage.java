@@ -4,7 +4,6 @@ import controleur.Controleur;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Duration;
@@ -58,6 +57,9 @@ public abstract class DessinPerssonage extends Circle {
      * @param controleur
      */
     public void calculPosition(int x, int y, Controleur controleur, MainView mainView) {
+        if (this instanceof DessinIntrus) {
+            controleur.getTerrain().getIntrus().setEnDeplacement(true);
+        }
         this.posX += x;
         this.posY += y;
         DessinPerssonage dessinPerssonage = this;

@@ -259,7 +259,6 @@ public class MainView extends Application {
     private void ajouteLesComande(Scene scene, MainView mainView) {
         scene.setOnKeyPressed(keyEvent -> {
             if (!mainView.controleur.getTerrain().getIntrus().isEnDeplacement()) {
-                mainView.controleur.getTerrain().getIntrus().setEnDeplacement(true);
                 switch (keyEvent.getCode()) {
                     case UP:
                     case Z:
