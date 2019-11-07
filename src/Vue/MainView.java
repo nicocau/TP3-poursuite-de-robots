@@ -398,6 +398,7 @@ public class MainView extends Application {
             mainArray.put("POURCENTAGE_MUR", Main.POURCENTAGE_MUR);
             mainArray.put("tempo", Main.tempo);
             mainArray.put("NB_TICKE_RECHECHERCHE", Main.NB_TICKE_RECHECHERCHE);
+            mainArray.put("NB_MEMOIRE", Main.NB_MEMOIRE);
             String json = gson.toJson(mainArray);
             Files.writeString(orderPath, json);
         } catch (IOException e) {
@@ -445,6 +446,8 @@ public class MainView extends Application {
                 Main.tempo = (Double) mainArray.get("tempo");
                 tmp = (Double) mainArray.get("NB_TICKE_RECHECHERCHE");
                 Main.NB_TICKE_RECHECHERCHE = tmp.intValue();
+                tmp = (Double) mainArray.get("NB_MEMOIRE");
+                Main.NB_MEMOIRE = tmp.intValue();
             }
         } catch (IOException e) {
             System.out.println("Impossible d'écrire dans le fichier de sauvegarde");

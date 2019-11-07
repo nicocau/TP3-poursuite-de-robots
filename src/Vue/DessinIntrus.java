@@ -31,7 +31,7 @@ public class DessinIntrus extends DessinPerssonage {
     }
 
     public void oubliePassage(MainView mainView){
-        if (this.trouVisions.size() > 10) {
+        if (this.trouVisions.size() > Main.NB_MEMOIRE) {
             TrouVision trouVision = this.trouVisions.pop();
             GraphicsContext graphicsContext = mainView.getCanvas().getGraphicsContext2D();
             graphicsContext.setFill(Color.WHITE);

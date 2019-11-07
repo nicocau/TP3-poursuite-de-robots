@@ -40,6 +40,10 @@ public class Main {
      * Nombre de tique pendent les quelle les robot vont chercher le joueur
      */
     public static volatile Integer NB_TICKE_RECHECHERCHE = 5;
+    /**
+     * Taille de la mémoire du joueur
+     */
+    public static volatile Integer NB_MEMOIRE = 50;
 
     /**
      * Nombre de pixelle des casse

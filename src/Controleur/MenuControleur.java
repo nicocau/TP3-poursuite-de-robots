@@ -80,6 +80,11 @@ public class MenuControleur implements Initializable {
      */
     @FXML
     private Spinner<Integer> editTickeRechercheRobot;
+    /**
+     * Spiner pout la taille de la mémoire du joueur
+     */
+    @FXML
+    private Spinner<Integer> editTickeMemoire;
 
     /**
      * Liste des spinners (on peut utiliser un hashSet car on n'a pas besoin de garder l'ordre dans les spinner n'est pas important)
@@ -121,6 +126,9 @@ public class MenuControleur implements Initializable {
         this.editTickeRechercheRobot.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10, Main.NB_TICKE_RECHECHERCHE));
         this.editTickeRechercheRobot.valueProperty().addListener((obs, oldValue, newValue) -> Main.NB_TICKE_RECHECHERCHE = newValue);
         spinners.add(this.editTickeRechercheRobot);
+        this.editTickeMemoire.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(10, 100, Main.NB_MEMOIRE));
+        this.editTickeMemoire.valueProperty().addListener((obs, oldValue, newValue) -> Main.NB_MEMOIRE = newValue);
+        spinners.add(this.editTickeMemoire);
 
         this.spinners.forEach(spinner -> {
             spinner.setEditable(true);
