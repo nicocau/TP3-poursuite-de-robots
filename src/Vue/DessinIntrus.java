@@ -27,19 +27,29 @@ public class DessinIntrus extends DessinPerssonage {
         GraphicsContext graphicsContext = mainView.getCanvas().getGraphicsContext2D();
         graphicsContext.setFill(Color.BLACK);
         graphicsContext.fillOval((this.posX - 3) * Main.tailleCase, (this.posY-3) * Main.tailleCase, Main.tailleCase * Main.DISTANCE_VUE * 2, Main.tailleCase * Main.DISTANCE_VUE * 2);
-        trouVisions.add(new TrouVision(this.posX,this.posY));
+        trouVisions.addLast(new TrouVision(this.posX, this.posY));
     }
 
     public void oubliePassage(MainView mainView){
-        if (this.trouVisions.size()>10){
+        if (this.trouVisions.size() > 10) {
             TrouVision trouVision = this.trouVisions.pop();
             GraphicsContext graphicsContext = mainView.getCanvas().getGraphicsContext2D();
             graphicsContext.setFill(Color.WHITE);
             graphicsContext.fillOval((trouVision.getX() - 3) * Main.tailleCase, (trouVision.getY()-3) * Main.tailleCase, Main.tailleCase * Main.DISTANCE_VUE * 2, Main.tailleCase * Main.DISTANCE_VUE * 2);
             trouVision = this.trouVisions.get(0);
-            graphicsContext.setFill(Color.BLACK);
+            graphicsContext.setFill(new Color(0.0, 0.0, 0.0, 0.25));
             graphicsContext.fillOval((trouVision.getX() - 3) * Main.tailleCase, (trouVision.getY()-3) * Main.tailleCase, Main.tailleCase * Main.DISTANCE_VUE * 2, Main.tailleCase * Main.DISTANCE_VUE * 2);
+            trouVision = this.trouVisions.get(1);
+            graphicsContext.setFill(new Color(0.0, 0.0, 0.0, 0.5));
+            graphicsContext.fillOval((trouVision.getX() - 3) * Main.tailleCase, (trouVision.getY() - 3) * Main.tailleCase, Main.tailleCase * Main.DISTANCE_VUE * 2, Main.tailleCase * Main.DISTANCE_VUE * 2);
+            trouVision = this.trouVisions.get(2);
+            graphicsContext.setFill(new Color(0.0, 0.0, 0.0, 0.75));
+            graphicsContext.fillOval((trouVision.getX() - 3) * Main.tailleCase, (trouVision.getY() - 3) * Main.tailleCase, Main.tailleCase * Main.DISTANCE_VUE * 2, Main.tailleCase * Main.DISTANCE_VUE * 2);
 
+            this.trouVisions.stream().skip(4).forEach(trouVisionFor -> {
+                graphicsContext.setFill(Color.BLACK);
+                graphicsContext.fillOval((trouVisionFor.getX() - 3) * Main.tailleCase, (trouVisionFor.getY() - 3) * Main.tailleCase, Main.tailleCase * Main.DISTANCE_VUE * 2, Main.tailleCase * Main.DISTANCE_VUE * 2);
+            });
         }
     }
 }
