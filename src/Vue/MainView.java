@@ -244,6 +244,8 @@ public class MainView extends Application {
                 event -> {
                     Logger.getInstance().ajouteUneLigne(TypeLog.DEBUG, "nouveau ticke");
                     this.animation();
+                    Logger.getInstance().ajouteUneLigne(TypeLog.DEBUG, "Oubliepassafe");
+                    this.dessinIntru.oubliePassage(this);
                 }));
         littleCycle.setCycleCount(Timeline.INDEFINITE);
         littleCycle.play();
@@ -378,6 +380,7 @@ public class MainView extends Application {
      * Permetre d'enregistre la partie
      */
     private void sauvegarde() {
+        this.controleur.getTerrain().getIntrus().setEnDeplacement(false);
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         Path orderPath;
@@ -411,6 +414,7 @@ public class MainView extends Application {
         } catch (IOException e) {
             System.out.println("Impossible d'écrire dans le fichier de sauvegarde");
         }
+        this.controleur.getTerrain().getIntrus().setEnDeplacement(false);
     }
 
     /**
